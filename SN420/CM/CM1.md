@@ -61,3 +61,20 @@ Une variable volatile permet de signaler au compilateur que cette variable est s
 
 #### Interrupt & Boot Vector - Interrupt Vector Table - Vectored Interrupt Controller
 Un microcontrolleur démarre à une adresse fixe, les interruptions sont a des adresses fixes connues. Ces adresses sont regroupés dans la table des interruptions (Interrupt & Boot Vector - Interrupt Vector Table - Vectored Interrupt Controller)
+
+
+#### ABI (Applicatioon Binary Interface)
+Interface de bas niveau entre les applications du système d'exploitation, entre une application et une bibliothèque ou bien entre différentes parties d'une même application.
+
+
+## II - Documentation chez ST
+![[Pasted image 20260914104048.png]]
+
+## III - GPIO
+![[Pasted image 20260914113528.png]]
+#### Slew rate
+C'est la vitesse à laquelle monte le signal (en prenant en distance les volts)
+![[Pasted image 20260914111318.png]]
+
+#### I/O Modes
+![[Pasted image 20260914112139.png]]
