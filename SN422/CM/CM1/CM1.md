@@ -24,3 +24,33 @@ Conceptions de circuits numériques de S.derrien (Archive 2023)
 - FPGA
 - Flot de conception
 - Diapo SN360
+
+
+### 1 - Machine de mealy pour la détection de fronts montants
+![[Pasted image 20260918102439.png]]
+
+#### Etape 1 - Définition du codage de l'état
+
+| Etat | s(t) |
+| ---- | ---- |
+| s0   | 0    |
+| s1   | 1    |
+
+
+#### Etape 2 - Obtention de la table de vérité
+| s(t) | i   | s(t+1) | o   |
+| ---- | --- | ------ | --- |
+| 0    | 0   | 0      | 0   |
+| 0    | 1   | 1      | 1   |
+| 1    | 0   | 0      | 0   |
+| 1    | 1   | 1      | 0   |
+
+#### Etape 3 - Equation logiques
+$$\begin{cases}
+s(t+1)& =  i \\
+o& = \neg s(t) \wedge i
+\end{cases}$$
+
+#### Etape 4 - Obtention du circuit
+![[Pasted image 20260918103734.png]]
+
