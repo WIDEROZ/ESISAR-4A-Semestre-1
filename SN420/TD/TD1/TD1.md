@@ -1,10 +1,16 @@
+# Exercice 1
+#### 1.
+Non signé : $[\![0, 2^{n}-1]\!]$ 
+Signé : $[\![-2^{n-1}, 2^{n-1}-1]\!]$
+
+
 # Exercice 2
-### 1.
+#### 1.
 $$\begin{cases}
-1 & 0x5F + 0x1A = 95 + 31 = 126 = 0111 \, 1001 = 0x79 \\
-2 & 0xFF + 0x01 = 0x100 \\
-3 & 0x5F + 0x60 = 95 + 96 = 191 = 0xBF = 0b1001 \, 1111 \\
-4 & 0x83 + 0xAB = 0x12E = 0b1 \, 0010 \, 1110
+1 & 0x5F + 0x1A &= 0x79 &= 112 +9 &= 121 \\
+2 & 0xFF + 0x01 &= 0x100 &&= 256 \\
+3 & 0x5F + 0x60 &= 0xBF &= 176 + 15 &=191  \\
+4 & 0x83 + 0xAB &= 0x12E &= 256 + 32 + 14 &=302
 \end{cases}$$
 
 #### 2.
@@ -28,31 +34,65 @@ $$\begin{cases}
 
 # Exercice 3
 #### 1.
-$$24\times 10^{6} Hz$$
+$$24\,Mz$$
+
 #### 2.
 Une interruption correspond a un jump $\Leftrightarrow$ on à entre $1$ et $10$ cycles pour une interruption
 On prend $5$ cycles.
 
 #### 3.
-| $\mu C$            | A                        | B                                 | C                                  |
-| ------------------ | ------------------------ | --------------------------------- | ---------------------------------- |
-| $MHz$              | 32                       | 64                                | 80                                 |
-| Save reg.          | PC                       | 8 reg                             | 4 reg                              |
-| Temps Cycle        | $2\times (3+1)=8$ cycles | $2\times (3 + 1 + 8) = 24$ cycles | $2 \times( 3 + 1 + 4) = 16$ cycles |
-| Temps interruption | 20 cycles                | 20 cycles                         | 20 cycles                          |
-| Total              | 33                       | 43                                | 35                                 |
-Le micro 
+
+| $\mu C$                 | A                  | B                  | C                  |
+| ----------------------- | ------------------ | ------------------ | ------------------ |
+| Fréquence $\mu C$ (Mhz) | 32                 | 64                 | 80                 |
+| Registres + PC          | (1 + 3) $\times$ 2 | (9 + 3) $\times$ 2 | (5 + 3) $\times$ 2 |
+| Calcul + Interrupt      | 20                 | 20                 | 20                 |
+| Interruption            | 5                  | 5                  | 5                  |
+| Cycles totaux           | 33                 | 49                 | 41                 |
+| Fréquence Totale (MHz)  | 0.96               | 1.31               | 1.95               |
+| Temps total ($\mu s$)   | 1.04               | 0.76               | 0.51               |
+
 #### 4.
-| $\mu C$            | A                                | B                                         | C                                           |
-| ------------------ | -------------------------------- | ----------------------------------------- | ------------------------------------------- |
-| $MHz$              | 32                               | 64                                        | 80                                          |
-| Save reg.          | PC                               | 8 reg                                     | 4 reg                                       |
-| Temps Cycle        | $2\times (3+1)=2\times 8$ cycles | $2\times (3 + 1 + 8) = 2\times 24$ cycles | $2 \times( 3 + 1 + 4) = 2 \times 16$ cycles |
-| Temps interruption | 20 cycles                        | 20 cycles                                 | 20 cycles                                   |
-| Total              | 41                               | 61                                        | 45                                          |
+
+| $\mu C$                 | A                               | B                               | C                               |
+| ----------------------- | ------------------------------- | ------------------------------- | ------------------------------- |
+| Fréquence $\mu C$ (Mhz) | 32                              | 64                              | 80                              |
+| Registres + PC          | ((1 + 3) $\times$ 2) $\times$ 2 | ((9 + 3) $\times$ 2) $\times$ 2 | ((5 + 3) $\times$ 2) $\times$ 2 |
+| Calcul + Interrupt      | 20                              | 20                              | 20                              |
+| Interruption            | 5                               | 5                               | 5                               |
+| Cycles totaux           | 41                              | 73                              | 57                              |
+| Fréquence Totale (MHz)  | 0.78                            | 0.88                            | 1.40                            |
+| Temps Total ($\mu s$)   | 1.28                            | 1.14                            | 0.71                            |
+
+# Exercice 4
+#### 1.
+$$\boxed{C = n \log_{2}(n) = 49\,152 \text{ calculs}}$$
+$$10C = 491\,520$$
+Alors, 
+$$\boxed{\frac{10C}{100\times 10^{6}}  \approx 5 \, \text{ms}}$$
+
+#### 2.
+$$\boxed{\frac{10C}{1\times 10^{6}}  \approx 0.5 \, \text{s}}$$
+Si le signal est en dessous de $2\, Hz$ le calcul est faisable.
+Sinon c'est compliqué.
+
+#### 3.
+- Échantillonner plus rapidement le signal 
+- Réduire le nombre d'échantillons
+
+
 
 # Exercice 5
 #### 1.
+| Algo                   | Addr & boucle      |
+| ---------------------- | ------------------ |
+| sum                    | j                  |
+| signal $\times$ filtre | return addr (jump) |
+| i-5+j                  | 10                 |
+| signal                 |                    |
+| filtre                 |                    |
+
+En cours : 
 Boucle : 
 $2$ pointeurs (signal et res)
 $1$ valeur de comparaison $10$
@@ -61,16 +101,57 @@ $1$ compteur $j$
 $3$ vars : (signal, sum, filtre)
 $1$ variable calcul de multiplication
 
+
+
 #### 2.
-$$10N \text{ itérations de la boucle interne}$$
+```C
+void moving_average10(int* signal, int* res, int N) {
+	int i, j;
+	for (i = 0; i < N; ++i){
+		int sum = 0;
+		for(j = 0; j < 10; ++j){
+			... // Ignore out-of-bound access
+			sum += signal[i-5+j]*filtre[j];
+		}
+		res[i] = sum;
+	}
+}
+```
 
-$1$ : $j++$
-2 : $i-5+j$
-1 : signal * filtre
-$1$ :  sum += ...
-
-mem access :
-signal\[i-5+j\] et filtre\[j\]
+$$10N$$
+Nombre de multiplications : 
+$$10N \times 1 = 10N$$
+Nombre d'additions : 
+$$10N \times 3 = 30 N$$
+Memory access :
+$$10N \times 2 = 20N$$
 
 #### 3.
+| $\mu C$                   | A             | B             | C              |
+| ------------------------- | ------------- | ------------- | -------------- |
+| Fréquence (MHz)           | 32            | 64            | 120            |
+| Additions (Cycle)         | $30N$         | $30N$         | $30N$          |
+| Multiplications (Cycle)   | $10N$         | $10N$         | $2 \times 10N$ |
+| Mem. Access (Cycle)       | $2\times 20N$ | $20N$         | $2\times 20N$  |
+| Branch (Cycle)            | $3\times 10N$ | $3\times 10N$ | $3\times 10N$  |
+| Total Cycles              | $110N$        | $90N$         | $120N$         |
+| Freq. algo. $N=1024$ (Hz) | $260,5$       | $625.2$       | $901.6$        |
+
+
+#### 4.
+La fréquence maximale de ce filtre est de $901.6 \, \text{Hz}$
+
+#### 5.
+$$\frac{F_{\mu C}}{F_{algo}} = kN \Leftrightarrow N=\frac{F_{\mu C}}{kF_{algo}}$$
+
+| $\mu C$         | A         | B         | C        |
+| --------------- | --------- | --------- | -------- |
+| Fréquence (MHz) | 32        | 64        | 120      |
+| $N$             | $1\, 067$ | $2\, 560$ | $3\,693$ |
+
+
+#### 6.
+Le nombre d'opérations dans la boucle interne est bien plus important qu'a l'extérieur :
+- $res[i]$ (mem. access)
+- for (branch)
 
