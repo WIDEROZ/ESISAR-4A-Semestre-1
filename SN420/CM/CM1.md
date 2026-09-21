@@ -78,3 +78,6 @@ C'est la vitesse à laquelle monte le signal (en prenant en distance les volts)
 
 #### I/O Modes
 ![[Pasted image 20260914112139.png]]
+
+# Timers
+![[Pasted image 20260921111347.png]]

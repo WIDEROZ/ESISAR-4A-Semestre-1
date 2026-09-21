@@ -72,5 +72,25 @@ $1$ :  sum += ...
 mem access :
 signal\[i-5+j\] et filtre\[j\]
 
+
+
+|                 |                 |
+| --------------- | --------------- |
+| Multiplications | $1 \times 10N$  |
+| Additions       | $3 \times 10 N$ |
+| Mem access      | $2 \times 10 N$ |
+
+
 #### 3.
 
+| $\mu C$                                    | A              | B              | C               |
+| ------------------------------------------ | -------------- | -------------- | --------------- |
+| Fréquence $\mu C$                          | 32             | 64             | 120             |
+| Additions                                  | $30N$          | $30N$          | $30N$           |
+| Multiplications                            | $10N$          | $10N$          | $2 \times 10 N$ |
+| Mem. Access                                | $2 \times 20N$ | $20N$          | $2 \times 20 N$ |
+| Branchements                               | $3 \times 10N$ | $3 \times 10N$ | $3 \times 10N$  |
+| Cycles Totaux                              | $110N$         | $90N$          | $120N$          |
+| Cycles pour $1024$ échantillons            | $112640$       | $92160$        | $122880$        |
+| Fréquence pour $1024$ échantillons (en Hz) | $284$          | $694$          | $977$           |
+| Taille maximale du signal                  | $1164$         | $2844$         | $4000$          |
