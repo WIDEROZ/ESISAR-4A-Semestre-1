@@ -136,16 +136,17 @@ $$10N \times 2 = 20N$$
 
 
 #### 3.
-| $\mu C$                   | A             | B             | C              |
-| ------------------------- | ------------- | ------------- | -------------- |
-| Fréquence (MHz)           | 32            | 64            | 120            |
-| Additions (Cycle)         | $30N$         | $30N$         | $30N$          |
-| Multiplications (Cycle)   | $10N$         | $10N$         | $2 \times 10N$ |
-| Mem. Access (Cycle)       | $2\times 20N$ | $20N$         | $2\times 20N$  |
-| Branch (Cycle)            | $3\times 10N$ | $3\times 10N$ | $3\times 10N$  |
-| Total Cycles              | $110N$        | $90N$         | $120N$         |
-| Freq. algo. $N=1024$ (Hz) | $260,5$       | $625.2$       | $901.6$        |
-
+| $\mu C$                                    | A              | B              | C               |
+| ------------------------------------------ | -------------- | -------------- | --------------- |
+| Fréquence $\mu C$                          | 32             | 64             | 120             |
+| Additions                                  | $30N$          | $30N$          | $30N$           |
+| Multiplications                            | $10N$          | $10N$          | $2 \times 10 N$ |
+| Mem. Access                                | $2 \times 20N$ | $20N$          | $2 \times 20 N$ |
+| Branchements                               | $3 \times 10N$ | $3 \times 10N$ | $3 \times 10N$  |
+| Cycles Totaux                              | $110N$         | $90N$          | $120N$          |
+| Cycles pour $1024$ échantillons            | $112640$       | $92160$        | $122880$        |
+| Fréquence pour $1024$ échantillons (en Hz) | $284$          | $694$          | $977$           |
+| Taille maximale du signal                  | $1164$         | $2844$         | $4000$          |
 
 #### 4.
 La fréquence maximale de ce filtre est de $901.6 \, \text{Hz}$
@@ -164,14 +165,3 @@ Le nombre d'opérations dans la boucle interne est bien plus important qu'a l'ex
 - $res[i]$ (mem. access)
 - for (branch)
 
-| $\mu C$                                    | A              | B              | C               |
-| ------------------------------------------ | -------------- | -------------- | --------------- |
-| Fréquence $\mu C$                          | 32             | 64             | 120             |
-| Additions                                  | $30N$          | $30N$          | $30N$           |
-| Multiplications                            | $10N$          | $10N$          | $2 \times 10 N$ |
-| Mem. Access                                | $2 \times 20N$ | $20N$          | $2 \times 20 N$ |
-| Branchements                               | $3 \times 10N$ | $3 \times 10N$ | $3 \times 10N$  |
-| Cycles Totaux                              | $110N$         | $90N$          | $120N$          |
-| Cycles pour $1024$ échantillons            | $112640$       | $92160$        | $122880$        |
-| Fréquence pour $1024$ échantillons (en Hz) | $284$          | $694$          | $977$           |
-| Taille maximale du signal                  | $1164$         | $2844$         | $4000$          |
