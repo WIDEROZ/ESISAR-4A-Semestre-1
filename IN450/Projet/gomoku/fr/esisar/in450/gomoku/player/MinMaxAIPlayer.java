@@ -25,7 +25,7 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 				}
 				else if(board.getCellColor(i, j) == CellColor.BLACK){
 					
-				}
+				}	
 			}
 		}
 		

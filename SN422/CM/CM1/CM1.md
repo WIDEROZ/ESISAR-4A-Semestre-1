@@ -1,4 +1,5 @@
-#### Définitions
+
+#### Définitions 
 - ASIC : Application Specific Integrated Circuit
 - FPGA : Field-Programmable Gate Array
 - eFPGA : embeded FPGA
@@ -53,4 +54,6 @@ o& = \neg s(t) \wedge i
 
 #### Etape 4 - Obtention du circuit
 ![[Pasted image 20260918103734.png]]
+
+Pour tout $\pi \in \mathbb{R}$ 
 

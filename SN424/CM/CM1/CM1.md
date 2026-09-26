@@ -74,4 +74,5 @@ $$f_{e}> 2f_{\max}$$
 
 #### Échantillonneur Bloqueur
 Bloqueur d'ordre $0$ 
-![[Pasted image 20260909145429.png]]
+![[Pasted image 20260924083613.png]]
+

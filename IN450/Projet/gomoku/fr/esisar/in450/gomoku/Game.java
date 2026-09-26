@@ -17,9 +17,11 @@ import fr.esisar.in450.gomoku.player.HumanPlayer;
  */
 public class Game
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
-		ex1();
+		
+		GomokuServer.main(null);
+		//ex1();
 		// ex2();
 		// ...
 	}
