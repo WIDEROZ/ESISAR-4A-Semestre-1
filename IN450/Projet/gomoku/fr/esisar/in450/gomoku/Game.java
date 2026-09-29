@@ -8,6 +8,7 @@ import fr.esisar.in450.gomoku.gamecore.server.GomokuServer;
 import fr.esisar.in450.gomoku.player.BasicAIPlayer;
 import fr.esisar.in450.gomoku.player.DummyPlayer;
 import fr.esisar.in450.gomoku.player.HumanPlayer;
+import fr.esisar.in450.gomoku.player.MinMaxAIPlayer;
 
 
 /**
@@ -19,11 +20,10 @@ public class Game
 {
 	public static void main(String[] args) throws IOException
 	{
-		
-		GomokuServer.main(null);
-		//ex1();
+		// ex1();
 		// ex2();
-		// ...
+		// ex3();
+		min_max_player();
 	}
 	
 	/**
@@ -51,6 +51,16 @@ public class Game
 	{
 		new LocalGameManager().startMatch(new BasicAIPlayer(), new BasicAIPlayer());
 	}
+	
+	/**
+	 * Exemple 1 : permet de faire une partie en local entre une IA min max et un joueur humain 
+	 */
+	public static void min_max_player()
+	{
+		new LocalGameManager().startMatch(new BasicAIPlayer(), new MinMaxAIPlayer());
+	}
+	
+	
 	
 	
 	

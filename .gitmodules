@@ -1,3 +1,6 @@
 [submodule ".obsidian"]
 	path = .obsidian
 	url = git@github.com:WIDEROZ/.obsidian.git
+[submodule "CSAW26-ESC"]
+	path = CSAW26-ESC
+	url = git@github.com:WIDEROZ/CSAW26-ESC.git

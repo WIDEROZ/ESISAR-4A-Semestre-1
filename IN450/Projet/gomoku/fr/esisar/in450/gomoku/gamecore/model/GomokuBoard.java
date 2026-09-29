@@ -1,6 +1,7 @@
 package fr.esisar.in450.gomoku.gamecore.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
@@ -21,6 +22,10 @@ public class GomokuBoard
     // Indice 0 : la ligne 
     // Indice 1 : la colonne
     public CellColor [][] cells;
+    
+    
+    
+    
 
     /**
      * Création d'un plateau de Gomoku vide
@@ -43,11 +48,18 @@ public class GomokuBoard
 	
 	/** 
 	 * Permet de connaitre la couleur d'une case du plateau
-	 * Retourne null si la case est vide  
+	 * Retourne null si la case est vide ou out of range
 	 */ 
 	public CellColor getCellColor(int row, int col)
 	{
-		return cells[row][col];
+		if (0 <= row && row < SIZE && 0<= col && col < SIZE) {
+			return cells[row][col];
+		}
+		else {
+			System.err.println("Out of range getCellColor");
+			return null;
+		}
+		
 	}
 	
 	/**
@@ -252,6 +264,241 @@ public class GomokuBoard
 		}
 		return null;	
 	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Fonction d'évaluation du plateau
+	 */
+	public int eval_plateau() {
+		int len = this.SIZE;
+		int i,j;
+		for(i = 0; i < len; i++) {
+			for(j=0; j<len; j++) {
+				if(this.getCellColor(i, j) == CellColor.WHITE) {
+					
+				}
+				else if(this.getCellColor(i, j) == CellColor.BLACK){
+					
+				}	
+			}
+		}
+		
+		return 0;
+	}
+	
+	/**
+	 * Compte depuis un plateau le nombre de positions de x pions allignés ouvert
+	 * Paramètre : 
+	 * GomokuBoard plateau : plateau sur lequel trouver les position alignés
+	 * 
+	 * Renvoie un int[][][]
+	 * tab[0][][] : ouvert
+	 * tab[1][][] : semi-ouvert
+	 * tab[][0][] : Noirs
+	 * tab[][1][] : Blancs
+	 * tab[][][0] : Nombre de groupes de pions alignés par deux
+	 * tab[][][1] : Nombre de groupes de pions alignés par trois
+	 * tab[][][2] : Nombre de groupes de pions alignés par quatre
+	 * tab[][][3] : Nombre de groupes de pions alignés par cinq
+	 * 
+	 */
+	private int[][][] detect_schema(GomokuBoard plateau) throws Exception{
+		int[][][] ret = {{{0, 0, 0, 0}, {0, 0, 0, 0}}, {{0, 0, 0, 0}, {0, 0, 0, 0}}};
+		
+		// Parcours Ligne
+		int i;
+		String motif;
+		for(i = 0; i < SIZE; i++) {
+			motif = getLine(i);
+			parcours_motif(ret, motif);
+		}
+		
+		
+		
+		return ret;
+	}
+	
+	public static void main(String[] args) {
+		int[][][] ret = {{{0, 0, 0, 0}, {0, 0, 0, 0}}, {{0, 0, 0, 0}, {0, 0, 0, 0}}};
+		GomokuBoard bo = new GomokuBoard();
+		try {
+			bo.parcours_motif(ret, "BB WW BBBB");
+		}
+		catch (Exception e) {
+			System.err.println("Exception : " + e);
+		}
+		
+		
+		
+		System.out.println("                  Black         White");
+		
+		
+		int i, j, k;
+		for(i=0; i<2; i++) {
+			if(i == 0) {
+				System.out.print("   Ouvert   : ");
+			}
+			else{
+				System.out.print("Semi-ouvert : ");
+			}
+			for(j=0; j<2; j++) {
+				for(k=0; k<4; k++) {
+					if (k == 0) {
+						System.out.print("[" + ret[i][j][k] + ", ");
+					}
+					else if(k != 3) {
+						System.out.print(ret[i][j][k] + ", ");
+					}
+					else {
+						System.out.print(ret[i][j][k] + "]");
+					}
+				}
+				if(j == 0) {
+					System.out.print(", ");
+				}
+				else {
+					System.out.println("");
+				}
+			}
+		}
+		
+		
+	}
+	
+
+	
+	
+	private void parcours_motif(int[][][] ret, String motif) throws Exception{
+		char elt, prev_elt;
+		int i, count_motif;
+		boolean open = false;
+		
+		int len = motif.length();
+		prev_elt = motif.charAt(0);
+		
+		if(prev_elt == ' ') {
+			count_motif = 0;
+		}
+		else {
+			count_motif = 1;
+		}
+		
+		
+		for(i = 1; i < len; i++) {
+			elt = motif.charAt(i);
+			
+			if(elt == ' ') {
+				if(count_motif > 1) {
+					if (prev_elt == 'W') {
+						if(open) {
+							ret[0][1][count_motif-2]++;
+						}
+						else {
+							ret[1][1][count_motif-2]++;
+						}
+					}
+					else if(prev_elt == 'B') {
+						if(open) {
+							ret[0][0][count_motif-2]++;
+						}
+						else {
+							ret[1][0][count_motif-2]++;
+						}
+					}
+					else {
+						System.err.println("Index : " + i);
+						System.err.println("Motif : " + motif);
+						throw new Exception("Motif != '...W ' or '...B '");
+					}
+				}
+				count_motif = 0;
+				open = true;
+			}
+			else if(i == len-1) {
+				if(elt == 'W') { // "...W"
+					if(prev_elt == elt) { // "..WW"
+						count_motif++;
+						if (open) { // " W..WW"
+							ret[1][1][count_motif-2]++;
+						}
+					}
+				}
+				else if(elt == 'B') { // "...B"
+					if(prev_elt == elt) { // "..BB"
+						count_motif++;
+						if (open) { // " B..BB"
+							ret[1][0][count_motif-2]++;
+						}
+					}
+				}
+			}
+			else {
+				if(elt == 'W') {
+					if(prev_elt == elt) { // "..WW"
+						count_motif++;
+					}
+					else if(prev_elt == 'B') { // "..BW"
+						if(count_motif > 1) { // "..BBW"
+							if (open) { // " B...BBW"
+								ret[1][0][count_motif-2]++;
+							}
+						}
+						count_motif = 1;
+						open = false;
+					}
+					else if(prev_elt == ' ') { // " W"
+						count_motif = 1;
+						open = true;
+					}
+				}
+				else if(elt == 'B') {
+					if(prev_elt == elt) { // "..BB"
+						count_motif++;
+					}
+					else if(prev_elt == 'W') { // "..WB"
+						if(count_motif > 1) { // "..WWB"
+							if (open) {  // " W..WWB"
+								ret[1][1][count_motif-2]++;
+							}
+						}
+						count_motif = 1;
+						open = false;
+					}
+					else if(prev_elt == ' ') { // " B"
+						count_motif = 1;
+						open = true;
+					}
+				}
+			}
+			
+			
+			prev_elt = elt;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

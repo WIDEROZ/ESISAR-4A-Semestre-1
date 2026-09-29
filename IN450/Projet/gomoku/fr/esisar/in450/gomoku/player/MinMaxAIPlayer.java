@@ -1,8 +1,11 @@
 package fr.esisar.in450.gomoku.player;
 
+import java.util.Iterator;
+
 import fr.esisar.in450.gomoku.gamecore.AbstractPlayer;
 import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
 import fr.esisar.in450.gomoku.gamecore.model.Coords;
+import fr.esisar.in450.gomoku.gamecore.model.GomokuBoard;
 
 public class MinMaxAIPlayer extends AbstractPlayer {
 
@@ -12,25 +15,6 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 		return null;
 	}
 	
-	
-	
-	
-	private int eval_plateau() {
-		int len = board.SIZE;
-		int i,j;
-		for(i = 0; i < len; i++) {
-			for(j=0; j<len; j++) {
-				if(board.getCellColor(i, j) == CellColor.WHITE) {
-					
-				}
-				else if(board.getCellColor(i, j) == CellColor.BLACK){
-					
-				}	
-			}
-		}
-		
-		return 0;
-	}
 	
 	
 	/**
