@@ -19,7 +19,7 @@ public class GomokuBoard
     // Taille du plateau
     public final int SIZE = 15;
     
-    // Indice 0 : la ligne 
+    // Indice 0 : la ligne
     // Indice 1 : la colonne
     public CellColor [][] cells;
     
@@ -273,21 +273,39 @@ public class GomokuBoard
 	/**
 	 * Fonction d'évaluation du plateau
 	 */
-	public int eval_plateau() {
-		int len = this.SIZE;
-		int i,j;
-		for(i = 0; i < len; i++) {
-			for(j=0; j<len; j++) {
-				if(this.getCellColor(i, j) == CellColor.WHITE) {
-					
-				}
-				else if(this.getCellColor(i, j) == CellColor.BLACK){
-					
-				}	
-			}
-		}
+	public int eval_plateau() throws Exception{
+		int[][][] ret;
+		ret = detect_schema();
 		
-		return 0;
+		return eval_function(ret);
+	}
+	
+	
+	private int eval_function(int[][][] ret) {
+		int count = 0;
+		count += ret[0][0][0] * 5;
+		count += ret[0][0][1] * 100;
+		count += ret[0][0][2] * 100000;
+		count += ret[0][0][3] * 1000000000;
+		
+		count += ret[1][0][0] * 2;
+		count += ret[1][0][1] * 25;
+		count += ret[1][0][2] * 10000;
+		count += ret[1][0][3] * 1000000000;
+		
+		count -= ret[0][1][0] * 5;
+		count -= ret[0][1][1] * 100;
+		count -= ret[0][1][2] * 100000;
+		count -= ret[0][1][3] * 1000000000;
+		
+		count -= ret[1][1][0] * 2;
+		count -= ret[1][1][1] * 25;
+		count -= ret[1][1][2] * 10000;
+		count -= ret[1][1][3] * 1000000000;
+		
+		
+		
+		return count;
 	}
 	
 	/**
@@ -306,16 +324,29 @@ public class GomokuBoard
 	 * tab[][][3] : Nombre de groupes de pions alignés par cinq
 	 * 
 	 */
-	private int[][][] detect_schema(GomokuBoard plateau) throws Exception{
+	private int[][][] detect_schema() throws Exception{
 		int[][][] ret = {{{0, 0, 0, 0}, {0, 0, 0, 0}}, {{0, 0, 0, 0}, {0, 0, 0, 0}}};
 		
-		// Parcours Ligne
+		// Parcours Ligne / Colonnes
 		int i;
 		String motif;
+		List<String> liste_diag_desc = getAllDiagDesc();
+		List<String> liste_diag_asc = getAllDiagAsc();
+		
 		for(i = 0; i < SIZE; i++) {
 			motif = getLine(i);
 			parcours_motif(ret, motif);
+			motif = getColonne(i);
+			parcours_motif(ret, motif);
 		}
+		
+		for(String motif_d : liste_diag_desc) {
+			parcours_motif(ret, motif_d);
+		}
+		for(String motif_d : liste_diag_asc) {
+			parcours_motif(ret, motif_d);
+		}
+
 		
 		
 		
@@ -386,6 +417,8 @@ public class GomokuBoard
 		else {
 			count_motif = 1;
 		}
+		
+		
 		
 		
 		for(i = 1; i < len; i++) {
