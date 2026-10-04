@@ -25,6 +25,11 @@ public class GomokuBoard
     
     
     
+    // Previous move
+    public Coords prev_move;
+    
+    
+    
     
 
     /**
@@ -43,6 +48,7 @@ public class GomokuBoard
      */
 	public void setCellColor(int row, int col, CellColor cellColor)
 	{
+		prev_move = new Coords(row, col);
 		cells[row][col] = cellColor;
 	}
 	
@@ -273,7 +279,7 @@ public class GomokuBoard
 	/**
 	 * Fonction d'évaluation du plateau
 	 */
-	public int eval_plateau() throws Exception{
+	public int eval_plateau(){
 		int[][][] ret;
 		ret = detect_schema();
 		
@@ -324,7 +330,7 @@ public class GomokuBoard
 	 * tab[][][3] : Nombre de groupes de pions alignés par cinq
 	 * 
 	 */
-	private int[][][] detect_schema() throws Exception{
+	private int[][][] detect_schema(){
 		int[][][] ret = {{{0, 0, 0, 0}, {0, 0, 0, 0}}, {{0, 0, 0, 0}, {0, 0, 0, 0}}};
 		
 		// Parcours Ligne / Colonnes
@@ -403,7 +409,7 @@ public class GomokuBoard
 
 	
 	
-	private void parcours_motif(int[][][] ret, String motif) throws Exception{
+	private void parcours_motif(int[][][] ret, String motif){
 		char elt, prev_elt;
 		int i, count_motif;
 		boolean open = false;
@@ -445,7 +451,6 @@ public class GomokuBoard
 					else {
 						System.err.println("Index : " + i);
 						System.err.println("Motif : " + motif);
-						throw new Exception("Motif != '...W ' or '...B '");
 					}
 				}
 				count_motif = 0;
