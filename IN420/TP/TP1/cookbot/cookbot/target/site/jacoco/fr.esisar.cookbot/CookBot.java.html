@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CookBot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cookbot</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.cookbot</a> &gt; <span class="el_source">CookBot.java</span></div><h1>CookBot.java</h1><pre class="source lang-java linenums">package fr.esisar.cookbot;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class CookBot {
+	
+	static final int ON = 0;
+	static final int OFF = 1;
+	static final int COOK = 2;
+	static final int SLOW_COOK = 3;
+	
+	private int state;
+<span class="fc" id="L14">	private static final Logger LOGGER = LogManager.getLogger(CookBot.class);</span>
+	
+	
+	
+	public CookBot() {
+<span class="fc" id="L19">		super();</span>
+<span class="fc" id="L20">		state = ON;</span>
+<span class="fc" id="L21">	}</span>
+	
+	public void switchOn() {
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">		if (state == ON) {</span>
+<span class="nc" id="L25">			LOGGER.info(&quot;CookBot is already switched on&quot;);</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		} else if (state == COOK) {</span>
+<span class="fc" id="L27">			state = ON;</span>
+<span class="fc" id="L28">			LOGGER.info(&quot;CookBot is switched on...&quot;);</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">		} else if (state == OFF) {</span>
+<span class="nc" id="L30">			state = ON;</span>
+<span class="nc" id="L31">			LOGGER.info(&quot;CookBot is switched on...&quot;);</span>
+		}
+<span class="nc bnc" id="L33" title="All 2 branches missed.">		else if (state == SLOW_COOK) {</span>
+<span class="nc" id="L34">			state = ON;</span>
+<span class="nc" id="L35">			LOGGER.info(&quot;CookBot is switched on...&quot;);</span>
+		}
+		
+<span class="fc" id="L38">	}</span>
+	
+	public void regularCook() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">		if (state == ON) {</span>
+<span class="fc" id="L42">			state = COOK;</span>
+<span class="fc" id="L43">			LOGGER.info(&quot;CookBot is cooking...&quot;);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		} else if (state == COOK) {</span>
+<span class="fc" id="L45">			LOGGER.info(&quot;CookBot is already cooking...&quot;);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		} else if (state == OFF) {</span>
+<span class="nc" id="L47">			LOGGER.info(&quot;CookBot cannot cook when it is switched off&quot;);</span>
+		}
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		else if (state == SLOW_COOK) {</span>
+<span class="nc" id="L50">			state = COOK ;</span>
+<span class="nc" id="L51">			LOGGER.info(&quot;CookBot is cooking ...&quot;);</span>
+		}
+<span class="fc" id="L53">	}</span>
+	
+	public void slowCook() {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (state == ON) {</span>
+<span class="nc" id="L57">			state = SLOW_COOK;</span>
+<span class="nc" id="L58">			LOGGER.info(&quot;CookBot is cooking at a lower temperature...&quot;);</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		} else if (state == COOK) {</span>
+<span class="fc" id="L60">			state = SLOW_COOK;</span>
+<span class="fc" id="L61">			LOGGER.info(&quot;CookBot is cooking at a lower temperature...&quot;);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		} else if (state == SLOW_COOK) {</span>
+<span class="nc" id="L63">			LOGGER.info(&quot;CookBot is already cooking at a lower temperature...&quot;);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		} else if (state == OFF) {</span>
+<span class="nc" id="L65">			LOGGER.info(&quot;CookBot cannot when it is switch off ..&quot;);</span>
+		}
+		
+<span class="fc" id="L68">	}</span>
+	
+	public void switchOff() {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (state == ON) {</span>
+<span class="fc" id="L72">			state = OFF;</span>
+<span class="fc" id="L73">			LOGGER.info(&quot;CookBot is switched off&quot;);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		} else if (state == COOK) {</span>
+<span class="nc" id="L75">			LOGGER.info(&quot;CookBot cannot be switched off while cooking&quot;);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		} else if (state == OFF) {</span>
+<span class="nc" id="L77">			LOGGER.info(&quot;CookBot is already switched off&quot;);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		} else if (state == SLOW_COOK) {</span>
+<span class="nc" id="L79">			LOGGER.info(&quot;CookBot cannot be switched off while slowly cooking &quot;);</span>
+		}
+<span class="fc" id="L81">	}</span>
+	
+	public int getState() {
+<span class="fc" id="L84">		return state;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
