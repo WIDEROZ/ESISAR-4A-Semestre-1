@@ -1,6 +1,6 @@
 package fr.esisar.in450.gomoku.player;
 
-import java.util.Iterator;
+
 
 import fr.esisar.in450.gomoku.gamecore.AbstractPlayer;
 import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
@@ -15,9 +15,11 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 	private Tree minmax_tree;
 	private boolean premier_coup = true;
 	
-	
-	
+	public static final double POSITIVE_INFINITY = 1.0 / 0.0;
+	public static final double NEGATIVE_INFINITY = -1.0 / 0.0;
 
+	
+	
 
 	@Override
 	public Coords play() {
@@ -26,9 +28,11 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 			if(board.isEmpty()) {
 				Coords coup = new Coords(7, 7);
 				minmax_tree = new Tree(coup, 0);
+				minmax_tree.construct_minmax_tree(coup, depth_MINMAX, true);
 				return coup;
 			}
 		}
+
 		Coords prev_move = board.prev_move;
 		
 		Tree tmp_tree = minmax_tree.getNextNode(prev_move);
@@ -41,27 +45,91 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 		
 		
 		
-		minmax(depth_MINMAX, true, board);
+		
 		return null;
 	}
 	
 	
-	
-	private int minmax(int depth, boolean max, GomokuBoard plateau) {
-		if(depth == 0) {
-			return plateau.eval_plateau();
+	/*
+	 * Create a minmax tree regarding the posSible moves on the board
+	 * 
+	 */
+	private Tree construct_minmax_tree(Coords move, int depth, boolean is_player_turn) {
+		if(depth == 1) {
+			return new Tree(move);
 		}
 		else {
-			if(max) {
-				
+			// Détermination de la couleur
+			CellColor color;
+			if(!is_player_turn) {
+				if(playerColor == CellColor.WHITE) {
+					color = CellColor.BLACK;
+				}
+				else {
+					color = CellColor.WHITE;
+				}
 			}
 			else {
-				
+				color = playerColor;
 			}
+			// Fin de la détermination de la couleur
+			
+			
+			Tree tree = new Tree(move);
+			for(Coords coordonnes : board.empty_cells) {
+				board.setCellColor(coordonnes.row, coordonnes.col, color);
+				tree.getChildrens().add(construct_minmax_tree(coordonnes, depth-1, !is_player_turn));
+				board.removeCellColor(coordonnes.row, coordonnes.col);
+			}
+			
+			return tree;
+			
 		}
-		return 0;
 	}
 	
+	
+	
+	private int minmax(int depth, boolean max, Tree arbre) {
+		if(depth == 0 || arbre.isLeaf()) {
+			int eval = board.eval_plateau();
+			arbre.setEval(eval);
+			return eval;
+		}
+		else {
+			Coords move;
+			if(max) { // IA
+				arbre.setEval((int) NEGATIVE_INFINITY);
+				for(Tree child : arbre.getChildrens()) {
+					move = child.getMove();
+					board.setCellColor(move.row, move.col, playerColor);
+					arbre.setEval(Math.max(arbre.getEval(), minmax(depth-1, false, child)));
+					board.removeCellColor(move.row, move.col);
+				}
+			}
+			else { // Adversaire
+				CellColor opponent_color;
+				if(playerColor == CellColor.WHITE) {
+					opponent_color = CellColor.BLACK;
+				}
+				else {
+					opponent_color = CellColor.WHITE;
+				}
+				arbre.setEval((int) POSITIVE_INFINITY);
+				for(Tree child : arbre.getChildrens()) {
+					move = child.getMove();
+					board.setCellColor(move.row, move.col, opponent_color);
+					arbre.setEval(Math.min(arbre.getEval(), minmax(depth-1, true, child)));
+					board.removeCellColor(move.row, move.col);
+				}
+			}
+			return arbre.getEval();
+		}
+		
+	}
+	
+	
+	
+
 	
 	
 	

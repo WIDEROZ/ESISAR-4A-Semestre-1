@@ -23,6 +23,10 @@ public class GomokuBoard
     // Indice 1 : la colonne
     public CellColor [][] cells;
     
+    // Liste les cellules vides : 
+    // int[0] = row
+    // int[1] = col
+    public ArrayList<Coords> empty_cells;
     
     
     // Previous move
@@ -39,19 +43,46 @@ public class GomokuBoard
     public GomokuBoard()
     {
         cells = new CellColor[SIZE][SIZE];
+        createEmpty_cells();
+    }
+    
+    
+    private void createEmpty_cells() {
+    	Coords cell;
+    	for(int i = 0; i < SIZE; i++) {
+    		for(int j = 0; j < SIZE; j++) {
+    			cell = new Coords(i, j);
+        		empty_cells.add(cell);
+        	}
+    	}
     }
     
     /**
      * Permet d'ajouter une pierre sur le plateau 
-     * 
-     * Pour enlenver une pierre, mettre CellColor à null
      */
-	public void setCellColor(int row, int col, CellColor cellColor)
+    public void setCellColor(int row, int col, CellColor cellColor)
+	{
+		if(cellColor == null) {
+			removeCellColor(row, col);
+		}
+		else {
+			prev_move = new Coords(row, col);
+			cells[row][col] = cellColor;
+			empty_cells.removeIf(tab -> (tab.col == col && tab.row == row));
+		}
+	}
+    
+    /*
+     * 
+     */
+    public void removeCellColor(int row, int col)
 	{
 		prev_move = new Coords(row, col);
-		cells[row][col] = cellColor;
+		Coords move = new Coords(row, col);
+		cells[row][col] = null;
+		empty_cells.add(move);
 	}
-	
+
 	/** 
 	 * Permet de connaitre la couleur d'une case du plateau
 	 * Retourne null si la case est vide ou out of range

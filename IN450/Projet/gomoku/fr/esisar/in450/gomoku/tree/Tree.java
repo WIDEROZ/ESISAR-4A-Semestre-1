@@ -2,12 +2,25 @@ package fr.esisar.in450.gomoku.tree;
 
 import java.util.ArrayList;
 import fr.esisar.in450.gomoku.gamecore.model.Coords;
+import fr.esisar.in450.gomoku.gamecore.model.GomokuBoard;
 
 
 public class Tree {
 	private Coords move;
 	private int eval;
 	private ArrayList<Tree> childrens;
+	
+	public Tree() {
+		move = null;
+		eval = 0;
+		childrens = null;
+	}
+	
+	public Tree(Coords move) {
+		this.move = move;
+		this.eval = 0;
+		childrens = null;
+	}
 	
 	public Tree(Coords move, int eval) {
 		this.move = move;
@@ -71,9 +84,7 @@ public class Tree {
 		}
 		return null;
 	}
-	
-	
-	
+
 	
 	
 }
