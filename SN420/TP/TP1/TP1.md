@@ -31,33 +31,9 @@ L’énoncé est ambigu on distingue alors deux choix :
 ![[Pasted image 20261004180630.png]]
 (Datasheet ATmega328P, Section 30, Page 280)
 ##### Inversion de la LED
-Pour allumer la LED : 
 ```assembly
-sbi PORTB 5
-sbi $05 5
-```
-
-sbi met le bit du registre sélectionné à 1
-cbi met le bit du registre sélectionné à 0
-
-Pour éteindre la LED : 
-```assembly
-cbi PORTB 5
-cbi $05 5
-```
-
-##### Inversion du mode entrée / sortie du port
-Ou si l'on souhaite inverser la direction du port
-Mode entrée : 
-```assembly
-cbi DDRB 5
-cbi $04 5
-```
-
-Mode sortie : 
-```assembly
-sbi DDRB 5
-sbi $04 5
+sbi $03, 5
+sbi PINB, 5
 ```
 
 
@@ -75,11 +51,42 @@ sbi $04 5
 | Valeur      |        | $16.000 \, \text{MHz}$ | $20 \, \text{pF}$  |
 | Description | Marque | Fréquence du crystal   | Capacité de charge |
 
-|             | 4X                              | D                                                                | U                             |
-| ----------- | ------------------------------- | ---------------------------------------------------------------- | ----------------------------- |
-| Valeur      | $3.5 \, \text{mm}$              | $\pm 100 \, \text{ppm}$                                          | $-55 \to 135 °C$              |
-| Description | Hauteur du conteneur du crystal | Variation de la précision de la fréquence suivant la température | Température de fonctionnement |
+|             | 4X                            | D                                                                | U                             |
+| ----------- | ----------------------------- | ---------------------------------------------------------------- | ----------------------------- |
+| Valeur      | $3.5 \, \text{mm}$            | $\pm 100 \, \text{ppm}$                                          | $-55 \to 135 °C$              |
+| Description | Hauteur du package du crystal | Variation de la précision de la fréquence suivant la température | Température de fonctionnement |
 
 Au bout d'un an l'incertitude du crystal est de $\pm 5 \, \text{ppm}$. 
 C'est à dire que la plage de fréquence du crystal sera de : 
 $$16 \, MHz \pm \frac{5}{1\, 000\, 000}$$
+
+# 2 - GPIO
+Fait un : 
+```ino
+#include
+```
+
+
+#### 1. PORTB
+![[PORTB.bmp]]
+
+#### 2 - PINB
+![[PINB.bmp]]
+
+
+
+
+#### Methode la plus rapide pour faire clignoter la LED
+La méthode la plus rapide est celle avec le changement de registre PORTB. 
+PINB fait :
+```assembly
+sbi 0x03, 5
+cbi 0x03, 5
+```
+PORTB fait :
+Fait un : 
+```assembly
+sbi 0x03, 5
+cbi 0x03, 5
+```
+C'est le même registre modifié.
