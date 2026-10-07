@@ -1,17 +1,16 @@
 package fr.esisar.cookbotStatePatern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class CookBot {
 	private CookBotState state;
-	
-	
-	
+	private static final Logger LOGGER = LogManager.getLogger(CookBot.class);
 	
 	public CookBot() {
 		super();
 		this.state = new OnState();
 	}
-	
-	
 	
 	
 	
@@ -31,17 +30,23 @@ public class CookBot {
 	
 	
 	
-	
-	
 	public void regularCook() {
+		LOGGER.info("CookBot is cooking...");
 		state.regularCook(this);
 	}
 	
+	public void slowCook() {
+		LOGGER.info("CookBot is cooking at a lower temperature...");
+		state.slowCook(this);
+	}
+	
 	public void switchOn() {
+		LOGGER.info("CookBot is switched on...");
 		state.switchOn(this);
 	}
 
 	public void switchOff() {
+		LOGGER.info("CookBot is switched off...");
 		state.switchOff(this);
 	}
 	

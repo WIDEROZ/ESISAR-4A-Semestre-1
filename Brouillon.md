@@ -8,4 +8,3 @@ Domotiques : Tags HF/RFID (ouvrir des portes)
 UHF
 
 Si problème sur la board RFID Kali.
-
