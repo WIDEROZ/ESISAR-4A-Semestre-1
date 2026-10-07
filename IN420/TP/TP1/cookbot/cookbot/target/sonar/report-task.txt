@@ -1,6 +1,6 @@
 projectKey=CookBot-KOFFI-BEC-CLEMENTE
-serverUrl=http://sonar.esisar.grenoble-inp.fr:9000
-serverVersion=26.8.0.126808
-dashboardUrl=http://sonar.esisar.grenoble-inp.fr:9000/dashboard?id=CookBot-KOFFI-BEC-CLEMENTE
-ceTaskId=064724fb-a78a-48c8-a8fe-7688b4492ec0
-ceTaskUrl=http://sonar.esisar.grenoble-inp.fr:9000/api/ce/task?id=064724fb-a78a-48c8-a8fe-7688b4492ec0
+serverUrl=https://sonar-jotamudo.duckdns.org
+serverVersion=26.9.0.129388
+dashboardUrl=https://sonar-jotamudo.duckdns.org/dashboard?id=CookBot-KOFFI-BEC-CLEMENTE
+ceTaskId=f0c62dfc-9b5b-4846-b0ac-30528507ddd4
+ceTaskUrl=https://sonar-jotamudo.duckdns.org/api/ce/task?id=f0c62dfc-9b5b-4846-b0ac-30528507ddd4

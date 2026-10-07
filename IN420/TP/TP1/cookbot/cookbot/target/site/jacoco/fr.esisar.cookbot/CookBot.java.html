@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CookBot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cookbot</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.cookbot</a> &gt; <span class="el_source">CookBot.java</span></div><h1>CookBot.java</h1><pre class="source lang-java linenums">package fr.esisar.cookbot;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CookBot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cookbot</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.cookbot</a> &gt; <span class="el_source">CookBot.java</span></div><h1>CookBot.java</h1><pre class="source lang-java linenums">package fr.esisar.cookbot;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,14 +21,14 @@ public class CookBot {
 <span class="fc" id="L21">	}</span>
 	
 	public void switchOn() {
-<span class="pc bpc" id="L24" title="1 of 2 branches missed.">		if (state == ON) {</span>
-<span class="nc" id="L25">			LOGGER.info(&quot;CookBot is already switched on&quot;);</span>
-<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		} else if (state == COOK) {</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">		if (state == ON) {</span>
+<span class="fc" id="L25">			LOGGER.info(&quot;CookBot is already switched on&quot;);</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		} else if (state == COOK) {</span>
 <span class="fc" id="L27">			state = ON;</span>
 <span class="fc" id="L28">			LOGGER.info(&quot;CookBot is switched on...&quot;);</span>
-<span class="nc bnc" id="L29" title="All 2 branches missed.">		} else if (state == OFF) {</span>
-<span class="nc" id="L30">			state = ON;</span>
-<span class="nc" id="L31">			LOGGER.info(&quot;CookBot is switched on...&quot;);</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">		} else if (state == OFF) {</span>
+<span class="fc" id="L30">			state = ON;</span>
+<span class="fc" id="L31">			LOGGER.info(&quot;CookBot is switched on...&quot;);</span>
 		}
 <span class="nc bnc" id="L33" title="All 2 branches missed.">		else if (state == SLOW_COOK) {</span>
 <span class="nc" id="L34">			state = ON;</span>
@@ -53,9 +53,9 @@ public class CookBot {
 <span class="fc" id="L53">	}</span>
 	
 	public void slowCook() {
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (state == ON) {</span>
-<span class="nc" id="L57">			state = SLOW_COOK;</span>
-<span class="nc" id="L58">			LOGGER.info(&quot;CookBot is cooking at a lower temperature...&quot;);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (state == ON) {</span>
+<span class="fc" id="L57">			state = SLOW_COOK;</span>
+<span class="fc" id="L58">			LOGGER.info(&quot;CookBot is cooking at a lower temperature...&quot;);</span>
 <span class="pc bpc" id="L59" title="1 of 2 branches missed.">		} else if (state == COOK) {</span>
 <span class="fc" id="L60">			state = SLOW_COOK;</span>
 <span class="fc" id="L61">			LOGGER.info(&quot;CookBot is cooking at a lower temperature...&quot;);</span>
@@ -68,13 +68,13 @@ public class CookBot {
 <span class="fc" id="L68">	}</span>
 	
 	public void switchOff() {
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (state == ON) {</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (state == ON) {</span>
 <span class="fc" id="L72">			state = OFF;</span>
 <span class="fc" id="L73">			LOGGER.info(&quot;CookBot is switched off&quot;);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		} else if (state == COOK) {</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		} else if (state == COOK) {</span>
 <span class="nc" id="L75">			LOGGER.info(&quot;CookBot cannot be switched off while cooking&quot;);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		} else if (state == OFF) {</span>
-<span class="nc" id="L77">			LOGGER.info(&quot;CookBot is already switched off&quot;);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		} else if (state == OFF) {</span>
+<span class="fc" id="L77">			LOGGER.info(&quot;CookBot is already switched off&quot;);</span>
 <span class="nc bnc" id="L78" title="All 2 branches missed.">		} else if (state == SLOW_COOK) {</span>
 <span class="nc" id="L79">			LOGGER.info(&quot;CookBot cannot be switched off while slowly cooking &quot;);</span>
 		}

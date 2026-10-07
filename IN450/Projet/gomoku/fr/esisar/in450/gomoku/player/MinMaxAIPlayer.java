@@ -11,7 +11,7 @@ import fr.esisar.in450.gomoku.tree.Tree;
 
 public class MinMaxAIPlayer extends AbstractPlayer {
 	
-	private static final int depth_MINMAX = 3;
+	private static final int depth_MINMAX = 2;
 	private Tree minmax_tree;
 	private boolean premier_coup = true;
 	
@@ -26,10 +26,9 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 		if(premier_coup) { // Si l'adversaire n'as pas encore joué alors on pose une pierre en (7, 7)
 			premier_coup = false;
 			if(board.isEmpty()) {
-				Coords coup = new Coords(7, 7);
-				minmax_tree = new Tree(coup, 0);
-				minmax_tree.construct_minmax_tree(coup, depth_MINMAX, true);
-				return coup;
+				Coords move = new Coords(7, 7);
+				minmax_tree = construct_minmax_tree(move, depth_MINMAX, true);
+				return move;
 			}
 		}
 
@@ -55,7 +54,7 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 	 * 
 	 */
 	private Tree construct_minmax_tree(Coords move, int depth, boolean is_player_turn) {
-		if(depth == 1) {
+		if(depth == 0) {
 			return new Tree(move);
 		}
 		else {

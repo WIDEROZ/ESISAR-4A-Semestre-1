@@ -1,3 +1,4 @@
+# EKIP 9
 Trouver une idée de produit/service innovant. 
 
 # Idées
@@ -7,7 +8,10 @@ Trouver une idée de produit/service innovant.
 - Etiquettes pour mesurer la péremption des aliments
 - Scooter volant grâce à l'électromagnétisme
 - Perruque avec coupe interchangeable
-- Gamelle permettant de faire faire du sport au chats en surpoid
+- Gamelle permettant de faire faire du sport au chats en surpoid. 
 - Robot aspirateur escalier compatible
 - Combi de déguisement universel
+
+
+# Cloud computing
 

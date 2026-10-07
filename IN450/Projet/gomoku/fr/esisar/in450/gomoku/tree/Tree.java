@@ -1,6 +1,7 @@
 package fr.esisar.in450.gomoku.tree;
 
 import java.util.ArrayList;
+import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
 import fr.esisar.in450.gomoku.gamecore.model.Coords;
 import fr.esisar.in450.gomoku.gamecore.model.GomokuBoard;
 
@@ -83,6 +84,10 @@ public class Tree {
 			}
 		}
 		return null;
+	}
+	
+	public Tree getMaxNextNode(CellColor pllayerColor) {
+		
 	}
 
 	

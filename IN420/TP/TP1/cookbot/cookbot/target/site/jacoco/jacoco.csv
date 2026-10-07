@@ -1,3 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-cookbot,fr.esisar.cookbot,CookBot,88,73,24,8,24,25,15,8,0,7
+cookbot,fr.esisar.cookbotStatePatern,CookBot,30,0,0,0,12,0,6,0,6,0
+cookbot,fr.esisar.cookbotStatePatern,CookState,21,0,0,0,8,0,4,0,4,0
+cookbot,fr.esisar.cookbotStatePatern,OnState,19,0,0,0,7,0,4,0,4,0
+cookbot,fr.esisar.cookbotStatePatern,OffState,21,0,0,0,8,0,4,0,4,0
+cookbot,fr.esisar.cookbot,CookBot,54,107,17,15,15,34,11,12,0,7
 cookbot,fr.esisar.cookbot,CookBotTestDrive,22,0,0,0,10,0,2,0,2,0

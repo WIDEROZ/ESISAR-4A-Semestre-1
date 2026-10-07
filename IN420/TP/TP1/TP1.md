@@ -56,4 +56,3 @@ Utiliser une interface plutôt qu'une classe abstraite semble plus approprié da
 #### Question 11
 ![[IN420/TP/TP1/Images/Screens/Question 11.png]]
 #### Question 12
-SonarQube pas installé

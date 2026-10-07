@@ -1,1 +1,4 @@
+fr/esisar/cookbot/OnStateTest.class
 fr/esisar/cookbot/CookStateTest.class
+fr/esisar/cookbot/SlowCookStateTest.class
+fr/esisar/cookbot/OffStateTest.class

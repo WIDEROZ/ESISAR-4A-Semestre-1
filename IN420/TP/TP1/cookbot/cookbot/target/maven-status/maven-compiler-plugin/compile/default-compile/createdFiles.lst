@@ -1,2 +1,7 @@
-fr/esisar/cookbot/CookBotTestDrive.class
+fr/esisar/cookbotStatePatern/OnState.class
 fr/esisar/cookbot/CookBot.class
+fr/esisar/cookbotStatePatern/OffState.class
+fr/esisar/cookbotStatePatern/CookBot.class
+fr/esisar/cookbot/CookBotTestDrive.class
+fr/esisar/cookbotStatePatern/CookState.class
+fr/esisar/cookbotStatePatern/CookBotState.class

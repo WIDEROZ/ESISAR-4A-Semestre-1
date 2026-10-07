@@ -14,7 +14,7 @@
 		<!-- Partie III : Propriétés à compléter ici pour l'utilisation de SonarQube -->
 		<sonar.projectKey>CookBot-KOFFI-BEC-CLEMENTE</sonar.projectKey>
 		<sonar.projetName>CookBot-KOFFI-BEC-CLEMENTE</sonar.projetName>
-		<sonar.host.url>http://sonar.esisar.grenoble-inp.fr:9000</sonar.host.url>
+		<sonar.host.url>https://sonar-jotamudo.duckdns.org</sonar.host.url>
 
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>

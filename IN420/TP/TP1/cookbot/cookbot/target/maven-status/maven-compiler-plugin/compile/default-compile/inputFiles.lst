@@ -1,2 +1,7 @@
-/home/beccleme/eclipse-workspace/cookbot.zip_expanded/cookbot/src/main/java/fr/esisar/cookbot/CookBotTestDrive.java
-/home/beccleme/eclipse-workspace/cookbot.zip_expanded/cookbot/src/main/java/fr/esisar/cookbot/CookBot.java
+/home/wideroz/Documents/Esisar/4A/ESISAR-4A-Semestre-1/IN420/TP/TP1/cookbot/cookbot/src/main/java/fr/esisar/cookbot/CookBotTestDrive.java
+/home/wideroz/Documents/Esisar/4A/ESISAR-4A-Semestre-1/IN420/TP/TP1/cookbot/cookbot/src/main/java/fr/esisar/cookbotStatePatern/CookBotState.java
+/home/wideroz/Documents/Esisar/4A/ESISAR-4A-Semestre-1/IN420/TP/TP1/cookbot/cookbot/src/main/java/fr/esisar/cookbotStatePatern/CookState.java
+/home/wideroz/Documents/Esisar/4A/ESISAR-4A-Semestre-1/IN420/TP/TP1/cookbot/cookbot/src/main/java/fr/esisar/cookbotStatePatern/CookBot.java
+/home/wideroz/Documents/Esisar/4A/ESISAR-4A-Semestre-1/IN420/TP/TP1/cookbot/cookbot/src/main/java/fr/esisar/cookbot/CookBot.java
+/home/wideroz/Documents/Esisar/4A/ESISAR-4A-Semestre-1/IN420/TP/TP1/cookbot/cookbot/src/main/java/fr/esisar/cookbotStatePatern/OffState.java
+/home/wideroz/Documents/Esisar/4A/ESISAR-4A-Semestre-1/IN420/TP/TP1/cookbot/cookbot/src/main/java/fr/esisar/cookbotStatePatern/OnState.java

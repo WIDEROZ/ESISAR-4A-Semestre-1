@@ -132,14 +132,14 @@
   </dependencies>
   <properties>
     <sonar.projetName>CookBot-KOFFI-BEC-CLEMENTE</sonar.projetName>
+    <sonar.language>java</sonar.language>
+    <maven.compiler.source>21</maven.compiler.source>
+    <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+    <sonar.host.url>https://sonar-jotamudo.duckdns.org</sonar.host.url>
     <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
     <maven.compiler.target>21</maven.compiler.target>
     <sonar.projectKey>CookBot-KOFFI-BEC-CLEMENTE</sonar.projectKey>
-    <sonar.language>java</sonar.language>
-    <maven.compiler.source>21</maven.compiler.source>
-    <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-    <sonar.host.url>http://sonar.esisar.grenoble-inp.fr:9000</sonar.host.url>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
