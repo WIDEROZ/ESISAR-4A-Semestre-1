@@ -15,8 +15,8 @@
 #### Question 5
 Du côté de la modélisation, le robot ne peux pas être eteint lorsqu'il est dans le mode `SLOW_COOK` et `COOK` ce qui pose un problème si l'utilisateur à lancé le programme `SLOW_COOK` ou `COOK` par mégarde et qu'il ne peux pas l'arrêter. 
 
-Du côté de l'implémentaton, tous les cas ne sont pas traités dans les méthodes. 
-Par exemple dans la méthode : `switchOff()`, si le robot est dans l'état `SLOW_COOK`, l'utilisateur n'est pas prévenu que le robot est toujours dans l'état `SLOW_COOK` et qu'il ne peux pas s'étteindre, ce qui peut-être dangereux, si l'utilsateur ne se rend pas compte que le robot n'est pas éteint. 
+Du côté de l’implémentation, tous les cas ne sont pas traités dans les méthodes. 
+Par exemple dans la méthode : `switchOff()`, si le robot est dans l'état `SLOW_COOK`, l'utilisateur n'est pas prévenu que le robot est toujours dans l'état `SLOW_COOK` et qu'il ne peux pas s’éteindre, ce qui peut-être dangereux, si l’utilisateur ne se rend pas compte que le robot n'est pas éteint. 
 De plus il manque aussi il manque aussi le traitement des cas non existants (else).
 Il existe aussi des cas redondants.  
 
@@ -51,8 +51,12 @@ Le diagramme de classes donné dans la Figure 2 semble respecter le modèle gén
 - State : CookBotState
 - Concrete States : `CookState`, `OnState`, `OffState`
 
-Utiliser une interface plutôt qu'une classe abstraite semble plus approprié dans cette situation car les états n'ont aucun comportement en communs donc chaque état est autonome.
+Utiliser une interface plutôt qu'une classe abstraite semble plus approprié dans cette situation car les états n'ont pas beaucoup de comportement en communs donc chaque état est autonome.
 
 #### Question 11
 ![[IN420/TP/TP1/Images/Screens/Question 11.png]]
+
 #### Question 12
+Au final le code passe le test de qualité sur SonarQube. Les seuls warnings sont ainsi des lignes de code répétés. 
+![[Question 12.1.png]]
+![[Question 12.2.png]]

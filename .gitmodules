@@ -4,3 +4,6 @@
 [submodule "CSAW26-ESC"]
 	path = CSAW26-ESC
 	url = git@github.com:WIDEROZ/CSAW26-ESC.git
+[submodule "Contrats"]
+	path = Contrats
+	url = git@github.com:WIDEROZ/Contrats.git

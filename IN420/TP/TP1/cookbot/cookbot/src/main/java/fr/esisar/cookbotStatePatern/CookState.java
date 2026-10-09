@@ -1,7 +1,6 @@
 package fr.esisar.cookbotStatePatern;
 
 public class CookState implements CookBotState {
-
 	@Override
 	public void switchOn(CookBot cookbot) {
 		cookbot.setState(new OnState());
@@ -10,6 +9,11 @@ public class CookState implements CookBotState {
 	@Override
 	public void regularCook(CookBot cookbot) {
 		cookbot.setState(this);
+	}
+	
+	@Override
+	public void slowCook(CookBot cookbot) {
+		cookbot.setState(new SlowCookState());
 	}
 
 	@Override
