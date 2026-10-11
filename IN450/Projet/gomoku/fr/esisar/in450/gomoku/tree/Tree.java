@@ -95,16 +95,19 @@ public class Tree {
 			System.err.println("getNextNode : childrens is empty ");
 			return null;
 		}
-		for(Tree child : childrens) {
-			if(!child.isLeaf()) {
-				if(move.equals(child.getMove())) {
-					return child;
-				}
-			}
-			else {
-				System.err.println("getNextNode : child is a leaf");
+		
+		
+		for (Tree child : childrens) {
+		    if (child != null) {
+		    	if(move.equals(child.getMove())) {
+		    		return child;
+		    	}
+		    }
+		    else {
+				System.err.println("getNextNode : child is null");
 			}
 		}
+		
 		return null;
 	}
 	

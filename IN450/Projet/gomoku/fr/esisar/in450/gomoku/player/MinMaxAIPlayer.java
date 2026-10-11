@@ -13,82 +13,87 @@ import java.util.ArrayList;
 
 public class MinMaxAIPlayer extends AbstractPlayer {
 	
-	private static final int depth_MINMAX = 4;
+	private static final int depth_MINMAX = 5;
 	private Tree minmax_tree;
 	private boolean premier_coup = true;
-	
-	public static final double POSITIVE_INFINITY = 1.0 / 0.0;
-	public static final double NEGATIVE_INFINITY = -1.0 / 0.0;
 
 	
 	
 
 	@Override
 	public Coords play() {
-		if(premier_coup) { // Si l'adversaire n'as pas encore joué alors on pose une pierre en (8, 8)
-			premier_coup = false;
-			if(board.isEmpty()) {
-				Coords move = new Coords(8, 8);
-				board.setCellColor(8, 8, playerColor);
-				minmax_tree = construct_minmax_tree(move, depth_MINMAX, false);
-				board.removeCellColor(8, 8);
-				return move;
-			}
-			else {
-				Coords prev_move = new Coords(board.prev_move);
-				System.out.println("Coup précédent : " + prev_move);
-				// Construction de l'arbre à partir du coup de l'adversaire : 
-				minmax_tree = construct_minmax_tree(prev_move, depth_MINMAX, true);
-				// Algorithme minmax sur l'arbre créé : 
-				minmax(depth_MINMAX, true, minmax_tree);
-				// Obtenir le coup qui maximise la fonction d'évaluation pour le joueur
-				Tree best_node = minmax_tree.getBestNextNode(playerColor);
-				minmax_tree = best_node;
-				return minmax_tree.getMove();
-			}
+		if(premier_coup) { // Jouer le premier coup
+			return playPremierCoup();
 		}
 		
-		
-		
-		// Obtenir ne noeud joué par le joueur adverse
+
+		// Obtenir le noeud joué par le joueur adverse
 		Coords prev_move = new Coords(board.prev_move);
 		System.out.println("Coup précédent : " + prev_move);
 		
-		
-		
-		
-		// Avancer dans l'arbre minmax suivant le dernier coup joué par l'adversaire
-		
-		Tree tmp_tree = minmax_tree.getNextNode(prev_move);
-		minmax_tree.displayTree(3);
-		tmp_tree.removeChildren(prev_move);
-		minmax_tree = tmp_tree;
-		
-		
 
-		
-		
-		// Touver la couleur du jouteur adverse : 
-		CellColor opponentColor;
-		if(playerColor == CellColor.WHITE) {
-			opponentColor = CellColor.BLACK;
+		// Avancer dans l'arbre minmax suivant le dernier coup joué par l'adversaire
+		Tree tmp_tree = minmax_tree.getNextNode(prev_move);
+		if(tmp_tree == null) { // Si l'enfant est null alors on reconstruit l'arbre
+			minmax_tree = construct_minmax_tree(prev_move, depth_MINMAX, playerColor);
 		}
 		else {
-			opponentColor = CellColor.WHITE;
+			minmax_tree = tmp_tree;
 		}
 		
+		// Afficher l'abre
+		//minmax_tree.displayTree(3);
 		
 		
-	
-		// Etendre l'arbre construit au début
+		// Touver la couleur du jouteur adverse
+		CellColor opponentColor = (playerColor == CellColor.WHITE) ? CellColor.BLACK : CellColor.WHITE;
+		
+		
+		// Etendre l'arbre à la profondeur souhaité
 		extend_minmax_tree(minmax_tree, depth_MINMAX, opponentColor);
-		minmax(depth_MINMAX, true, minmax_tree);
+		// On applique l'algorithme minmax
+		elagage_minmax(depth_MINMAX, true, minmax_tree, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		
 		
-
+		// On choisit le meilleur coup
 		minmax_tree = minmax_tree.getBestNextNode(playerColor);
 		
 		return minmax_tree.getMove();
+	}
+	
+	
+	
+	private Coords playPremierCoup() {
+		premier_coup = false;
+		if(board.isEmpty()) { // L'adversaire n'a pas encore joué
+			// Le joueur pose une case en (8, 8)
+			Coords move = new Coords(7, 7);
+			board.setCellColor(7, 7, playerColor);
+			
+			// Calcul de la couleur de l'adversaire
+			CellColor opponentColor = (playerColor == CellColor.WHITE) ? CellColor.BLACK : CellColor.WHITE;
+			
+			// Construction de l'arbre minmax
+			minmax_tree = construct_minmax_tree(move, depth_MINMAX, opponentColor);
+			board.removeCellColor(7, 7);
+			return move;
+		}
+		else { // L'adversaire à déjà joué
+			// On prend conaissance du coup précédent
+			Coords prev_move = new Coords(board.prev_move);
+			System.out.println("Coup précédent : " + prev_move);
+			
+			// Construction de l'arbre minmax à partir du coup de l'adversaire : 
+			minmax_tree = construct_minmax_tree(prev_move, depth_MINMAX, playerColor);
+			
+			// Algorithme minmax sur l'arbre créé : 
+			elagage_minmax(depth_MINMAX, true, minmax_tree, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			
+			// Obtenir le coup qui maximise la fonction d'évaluation pour le joueur
+			Tree best_node = minmax_tree.getBestNextNode(playerColor);
+			minmax_tree = best_node;
+			return minmax_tree.getMove();
+		}
 	}
 	
 	
@@ -96,33 +101,19 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 	 * Create a minmax tree regarding the possible moves on the board
 	 * 
 	 */
-	private Tree construct_minmax_tree(Coords move, int depth, boolean is_player_turn) {
-		if(depth == 0) {
+	private Tree construct_minmax_tree(Coords move, int depth, CellColor color) {
+		if(depth == 0) { // Condition d'arrêt de l'algorithme récursif
 			return new Tree(move);
 		}
 		else {
-			// Détermination de la couleur
-			CellColor color;
-			if(!is_player_turn) {
-				if(playerColor == CellColor.WHITE) {
-					color = CellColor.BLACK;
-				}
-				else {
-					color = CellColor.WHITE;
-				}
-			}
-			else {
-				color = playerColor;
-			}
-			// Fin de la détermination de la couleur
-			
-			
+			// Détermination de la prochaine couleur
+			CellColor nextColor = (color == CellColor.BLACK) ? CellColor.WHITE : CellColor.BLACK;
 			
 			// Parcours des cellules vides autour des cellules présentes sur le plateau
 			Tree tree = new Tree(move);
 			for(Coords coordonnes : new ArrayList<>(board.empty_cells)) {
 				board.setCellColor(coordonnes.row, coordonnes.col, color);
-				tree.getChildrens().add(construct_minmax_tree(coordonnes, depth-1, !is_player_turn));
+				tree.getChildrens().add(construct_minmax_tree(coordonnes, depth-1, nextColor));
 				board.removeCellColor(coordonnes.row, coordonnes.col);
 			}
 			
@@ -203,7 +194,7 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 		else {
 			Coords move;
 			if(max) { // IA
-				arbre.setEval((int) NEGATIVE_INFINITY);
+				arbre.setEval(Integer.MIN_VALUE);
 				for(Tree child : arbre.getChildrens()) {
 					move = child.getMove();
 					board.setCellColor(move.row, move.col, playerColor);
@@ -214,7 +205,7 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 			else { // Adversaire
 				CellColor opponentColor = (playerColor == CellColor.WHITE) ? CellColor.BLACK : CellColor.WHITE;
 				
-				arbre.setEval((int) POSITIVE_INFINITY);
+				arbre.setEval(Integer.MAX_VALUE);
 				for(Tree child : arbre.getChildrens()) {
 					move = child.getMove();
 					board.setCellColor(move.row, move.col, opponentColor);

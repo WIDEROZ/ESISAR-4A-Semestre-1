@@ -1,8 +1,7 @@
 package fr.esisar.in450.gomoku.gamecore.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 
 import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
 import fr.esisar.in450.gomoku.gamecore.enums.WinnerState;
@@ -385,7 +384,6 @@ public class GomokuBoard
 		return sb.toString();
 	}	
 	
-	
 	private String getCellAsString(int i, int j)
 	{
 		CellColor cellColor = getCellColor(i, j);
@@ -430,11 +428,18 @@ public class GomokuBoard
 	/**
 	 * Fonction d'évaluation du plateau
 	 */
-	public int eval_plateau(){
-		int[][][] ret;
-		ret = detect_schema();
-		
-		return eval_function(ret);
+	public int eval_plateau() {
+	    WinnerState winner = getWinnerState();
+
+	    if (winner == WinnerState.BLACK) {
+	        return Integer.MAX_VALUE;
+	    }
+
+	    if (winner == WinnerState.WHITE) {
+	        return Integer.MIN_VALUE;
+	    }
+
+	    return eval_function(detect_schema());
 	}
 	
 	
@@ -567,7 +572,6 @@ public class GomokuBoard
 		
 	}
 	
-
 	
 	
 	private void parcours_motif(int[][][] ret, String motif){
@@ -596,19 +600,23 @@ public class GomokuBoard
 			if(elt == ' ') {
 				if(count_motif > 1) {
 					if (prev_elt == 'W') {
-						if(open) {
-							ret[0][1][count_motif-2]++;
-						}
-						else {
-							ret[1][1][count_motif-2]++;
+						if (count_motif <= 5) {
+							if(open) {
+								ret[0][1][count_motif-2]++;
+							}
+							else {
+								ret[1][1][count_motif-2]++;
+							}
 						}
 					}
 					else if(prev_elt == 'B') {
-						if(open) {
-							ret[0][0][count_motif-2]++;
-						}
-						else {
-							ret[1][0][count_motif-2]++;
+						if (count_motif <= 5) {
+							if(open) {
+								ret[0][0][count_motif-2]++;
+							}
+							else {
+								ret[1][0][count_motif-2]++;
+							}
 						}
 					}
 					else {
