@@ -8,3 +8,6 @@ Pour éviter la capture d'aléas :
 Il faut que : 
 $$\boxed{T_{clk} > T_{basc} + T_{\text{comb\_max}} + T_{setup}}$$
 
+
+#### Nombre de flip-flops dans une machine à états
+$$n_{FF} > \log_{2}(n_{State})$$

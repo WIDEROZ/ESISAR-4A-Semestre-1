@@ -57,7 +57,7 @@ public class Game
 	 */
 	public static void min_max_player()
 	{
-		new LocalGameManager().startMatch(new BasicAIPlayer(), new MinMaxAIPlayer());
+		new LocalGameManager().startMatch(new MinMaxAIPlayer(), new BasicAIPlayer());
 	}
 	
 	

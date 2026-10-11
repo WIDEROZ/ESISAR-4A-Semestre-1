@@ -23,10 +23,10 @@ public class GomokuBoard
     // Indice 1 : la colonne
     public CellColor [][] cells;
     
-    // Liste les cellules vides : 
+    // Liste les cellules vides autour des pièces : 
     // int[0] = row
     // int[1] = col
-    public ArrayList<Coords> empty_cells;
+    public ArrayList<Coords> empty_cells = new ArrayList<Coords>();
     
     
     // Previous move
@@ -43,18 +43,18 @@ public class GomokuBoard
     public GomokuBoard()
     {
         cells = new CellColor[SIZE][SIZE];
-        createEmpty_cells();
     }
     
-    
-    private void createEmpty_cells() {
-    	Coords cell;
-    	for(int i = 0; i < SIZE; i++) {
-    		for(int j = 0; j < SIZE; j++) {
-    			cell = new Coords(i, j);
-        		empty_cells.add(cell);
-        	}
-    	}
+    public GomokuBoard(GomokuBoard plateau)
+    {
+        cells = new CellColor[plateau.cells.length][];
+
+        for (int i = 0; i < plateau.cells.length; i++) {
+        	cells[i] = plateau.cells[i].clone();
+        }
+        
+        prev_move = plateau.prev_move;
+        empty_cells = plateau.empty_cells;
     }
     
     /**
@@ -67,20 +67,36 @@ public class GomokuBoard
 		}
 		else {
 			prev_move = new Coords(row, col);
+			
 			cells[row][col] = cellColor;
+			addAvailableCells(row, col);
 			empty_cells.removeIf(tab -> (tab.col == col && tab.row == row));
 		}
 	}
+    
+    
     
     /*
      * 
      */
     public void removeCellColor(int row, int col)
 	{
-		prev_move = new Coords(row, col);
 		Coords move = new Coords(row, col);
+		
 		cells[row][col] = null;
-		empty_cells.add(move);
+		
+		removeUnavailableCells(row, col);
+		
+		if (empty_cells.isEmpty()) {
+			empty_cells.add(move);
+		}
+		else {
+			if (!empty_cells.contains(move)) {
+		        empty_cells.add(move);
+		    }
+		}
+		
+	
 	}
 
 	/** 
@@ -136,6 +152,110 @@ public class GomokuBoard
 		return false;
 	}
 	
+	
+	/**
+	 * Ajoute à empty_cells les cases vides autour d'une pierre.
+	 * Le voisinage est constitué des 8 cases adjacentes.
+	 */
+	public void addAvailableCells(int row, int col) {
+	    for (int dr = -1; dr <= 1; dr++) {
+	        for (int dc = -1; dc <= 1; dc++) {
+
+	            // Ignorer la case où se trouve la pierre
+	            if (dr == 0 && dc == 0) {
+	                continue;
+	            }
+
+	            int newRow = row + dr;
+	            int newCol = col + dc;
+
+	            // Vérifier que la case est dans le plateau
+	            if (newRow < 0 || newRow >= SIZE
+	                    || newCol < 0 || newCol >= SIZE) {
+	                continue;
+	            }
+
+	            // Ajouter uniquement les cases vides
+	            if (cells[newRow][newCol] == null) {
+	                Coords coord = new Coords(newRow, newCol);
+
+	                // Éviter les doublons
+	                if (empty_cells.isEmpty()) {
+	        			empty_cells.add(coord);
+	        		}
+	        		else {
+	        			if (!empty_cells.contains(coord)) {
+	        		        empty_cells.add(coord);
+	        		    }
+	        		}
+	                
+	            }
+	        }
+	    }
+	}
+	
+	
+	/**
+	 * Retire de empty_cells les cases qui ne sont plus voisines
+	 * d'aucune pierre après le retrait d'une pièce.
+	 */
+	public void removeUnavailableCells(int row, int col) {
+	    for (int dr = -1; dr <= 1; dr++) {
+	        for (int dc = -1; dc <= 1; dc++) {
+
+	            // Ignorer la case centrale
+	            if (dr == 0 && dc == 0) {
+	                continue;
+	            }
+
+	            int newRow = row + dr;
+	            int newCol = col + dc;
+
+	            // Vérifier les limites du plateau
+	            if (newRow < 0 || newRow >= SIZE
+	                    || newCol < 0 || newCol >= SIZE) {
+	                continue;
+	            }
+
+	            // Ne considérer que les cases vides
+	            if (cells[newRow][newCol] != null) {
+	                continue;
+	            }
+
+	            // Vérifier si une autre pierre est à proximité
+	            boolean hasNeighbor = false;
+
+	            for (int r = -1; r <= 1 && !hasNeighbor; r++) {
+	                for (int c = -1; c <= 1; c++) {
+
+	                    if (r == 0 && c == 0) {
+	                        continue;
+	                    }
+
+	                    int neighborRow = newRow + r;
+	                    int neighborCol = newCol + c;
+
+	                    if (neighborRow >= 0 && neighborRow < SIZE
+	                            && neighborCol >= 0 && neighborCol < SIZE
+	                            && cells[neighborRow][neighborCol] != null) {
+	                        hasNeighbor = true;
+	                        break;
+	                    }
+	                }
+	            }
+
+	            // Retirer la case si elle n'a plus aucune pierre voisine
+	            if (!hasNeighbor) {
+	                final int rr = newRow;
+	                final int cc = newCol;
+
+	                empty_cells.removeIf(
+	                    coord -> coord.row == rr && coord.col == cc
+	                );
+	            }
+	        }
+	    }
+	}
 
 
     /**
@@ -320,27 +440,36 @@ public class GomokuBoard
 	
 	private int eval_function(int[][][] ret) {
 		int count = 0;
-		count += ret[0][0][0] * 5;
-		count += ret[0][0][1] * 100;
-		count += ret[0][0][2] * 100000;
-		count += ret[0][0][3] * 1000000000;
 		
-		count += ret[1][0][0] * 2;
-		count += ret[1][0][1] * 25;
-		count += ret[1][0][2] * 10000;
-		count += ret[1][0][3] * 1000000000;
-		
-		count -= ret[0][1][0] * 5;
-		count -= ret[0][1][1] * 100;
-		count -= ret[0][1][2] * 100000;
-		count -= ret[0][1][3] * 1000000000;
-		
-		count -= ret[1][1][0] * 2;
-		count -= ret[1][1][1] * 25;
-		count -= ret[1][1][2] * 10000;
-		count -= ret[1][1][3] * 1000000000;
+	    int[] openWeights = {10, 1000, 100000, Integer.MAX_VALUE};
+		int[] semiWeights = {2, 100, 10000, Integer.MAX_VALUE};
 		
 		
+		for (int n = 0; n < 4; n++) {
+			if(n == 3) {
+				// Calcul lorsque 5 jetons sont alignés on met count a la valeure max
+				if(ret[0][0][n] > 0) {
+					count = Integer.MAX_VALUE;
+				}
+				else if(ret[1][0][n] > 0) {
+					count = Integer.MAX_VALUE;
+				}
+				else if(ret[0][1][n] > 0) {
+					count = Integer.MIN_VALUE;
+				}
+				else if(ret[1][1][n] > 0) {
+					count = Integer.MIN_VALUE;
+				}
+			}
+			else {
+				count += ret[0][0][n] * openWeights[n];
+				count += ret[1][0][n] * semiWeights[n];
+
+				count -= ret[0][1][n] * openWeights[n];
+				count -= ret[1][1][n] * semiWeights[n];
+				
+			}
+	    }
 		
 		return count;
 	}
@@ -395,6 +524,7 @@ public class GomokuBoard
 		GomokuBoard bo = new GomokuBoard();
 		try {
 			bo.parcours_motif(ret, "BB WW BBBB");
+			System.out.println(bo.eval_function(ret));
 		}
 		catch (Exception e) {
 			System.err.println("Exception : " + e);
@@ -461,6 +591,8 @@ public class GomokuBoard
 		for(i = 1; i < len; i++) {
 			elt = motif.charAt(i);
 			
+			
+			
 			if(elt == ' ') {
 				if(count_motif > 1) {
 					if (prev_elt == 'W') {
@@ -491,7 +623,7 @@ public class GomokuBoard
 				if(elt == 'W') { // "...W"
 					if(prev_elt == elt) { // "..WW"
 						count_motif++;
-						if (open) { // " W..WW"
+						if (open && count_motif <= 5) { // " W..WW"
 							ret[1][1][count_motif-2]++;
 						}
 					}
@@ -499,7 +631,7 @@ public class GomokuBoard
 				else if(elt == 'B') { // "...B"
 					if(prev_elt == elt) { // "..BB"
 						count_motif++;
-						if (open) { // " B..BB"
+						if (open && count_motif <= 5) { // " B..BB"
 							ret[1][0][count_motif-2]++;
 						}
 					}
@@ -512,7 +644,7 @@ public class GomokuBoard
 					}
 					else if(prev_elt == 'B') { // "..BW"
 						if(count_motif > 1) { // "..BBW"
-							if (open) { // " B...BBW"
+							if (open && count_motif <= 5) { // " B...BBW"
 								ret[1][0][count_motif-2]++;
 							}
 						}
@@ -530,7 +662,7 @@ public class GomokuBoard
 					}
 					else if(prev_elt == 'W') { // "..WB"
 						if(count_motif > 1) { // "..WWB"
-							if (open) {  // " W..WWB"
+							if (open && count_motif <= 5) {  // " W..WWB"
 								ret[1][1][count_motif-2]++;
 							}
 						}
