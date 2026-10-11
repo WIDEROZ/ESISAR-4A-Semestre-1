@@ -34,6 +34,9 @@ public class Tree {
 		this.childrens = childrens;
 	}
 
+	/*
+	 * Getters et Setters
+	 */
 	public Coords getMove() {
 		return move;
 	}
@@ -59,14 +62,18 @@ public class Tree {
 		this.childrens = childrens;
 	}
 	
-	
+	/*
+	 * Suppression d'un enfant de l'arbre suivant le coup donné en paramètre
+	 */
 	public void removeChildren(Coords move) {
 		Tree node_to_remove = getNextNode(move);
 		childrens.remove(node_to_remove);
 	}
 	
 	
-	
+	/*
+	 * Renvoie true si l'arbre ne possède pas d'enfants (childrens == null ou childrens est un ArrayList vide)
+	 */
 	public boolean isLeaf() {
 		if(childrens == null) {
 			return true;
@@ -80,7 +87,7 @@ public class Tree {
 	}
 	
 	/* 
-	 * Get the next node of the tree regarding the move
+	 * Renvoie la prochaine cellule de l'arbre suivant le coup donné en paramètre
 	 */
 	public Tree getNextNode(Coords move) {
 		if (move == null) {
@@ -112,6 +119,9 @@ public class Tree {
 	}
 	
 	
+	/*
+	 * Renvoie l'enfant suivant la valeur du paramètre eval maximisant le gain du joueur donné en paramètre (couleure)
+	 */
 	public Tree getBestNextNode(CellColor playerColor) {
 	    if (childrens == null) {
 	        return null;
@@ -155,16 +165,26 @@ public class Tree {
 	    return bestNode;
 	}
 	
+	
+	
+	/*
+	 * Affichage de l'arbre sur la console avec la profondeur souhaitée
+	 */
 	public void displayTree(int depth) {
 	    displayTree("", true, depth);
 	}
 
+	
+	
+	/*
+	 * Affichage récursif de l'arbre
+	 * */
 	private void displayTree(String prefix, boolean isLast, int depth) {
 	    if(depth == 0) {
 	    	return;
 	    }
 	    else {
-	    	// Afficher le nœud actuel
+	    	// Afficher le noeud actuel
 		    System.out.println(prefix
 		            + (isLast ? "└── " : "├── ")
 		            + "Tree (move=" + move

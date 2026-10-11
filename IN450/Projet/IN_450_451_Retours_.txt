@@ -1,0 +1,24 @@
+﻿IN450_451_2026_2027.
+
+
+	#ID
+Mail étudiant :
+	#FONCTION_BASE
+La fonction d’évaluation est implémentée et fonctionne : OUI
+L’algo MinMax est implémenté : OUI
+L’algo MinMax fonctionne : OUI
+L’élagage Alpha/Beta est implémenté : OUI
+L’élagage Alpha/Beta fonctionne : OUI
+Mon IA l’emporte sur une IA Basique : OUI
+J’arrive à faire une partie en réseau contre un camarade avec mon IA :  OUI
+Je peux régler facilement la profondeur de mon MinMax :  OUI
+	#PROFONDEUR_MAX
+Avec un temps de calcul d’environ 10 secondes Max je peux aller jusqu’à quelle profondeur : 5
+	#BONUS
+J’ai fait un Bonus (Affichage par exemple…) : NON
+Description du Bonus si OUI :
+	#TOURNOI
+Pensez vous que vous avez des chances pour le tournoi : NON
+Pourquoi (texte libre) :  Je n'ai pas passé beaucoup de mon temps libre sur le projet. De plus en ayant discuté avec mes camarades, leur implémentation semble plus optimisé que la mienne.
+	#RETOURS
+Avez vous des retours à faire sur ce projet (texte libre) : Ne pas imposer l'utilisation d'Eclipse une alternative pourait être d'utiliser un autre IDE avec Apache ANT.

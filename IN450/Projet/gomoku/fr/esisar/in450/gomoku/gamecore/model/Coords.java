@@ -21,6 +21,11 @@ public class Coords
         col = coords.col;
     }
     
+    public Coords(int row, int column){
+        this.row = row;
+        this.col = column;
+    }
+    
     @Override
     public boolean equals(Object obj) {
     	if (!(obj instanceof Coords)) {
@@ -34,19 +39,8 @@ public class Coords
     	
     }
     
-    public void main(String[] args) {
-    	Coords test1 = new Coords(7, 8);
-    	Coords test2 = new Coords(7, 8);
-    	System.out.println(test1.equals(test2));
-    }
-
-    public Coords(int row, int column)
-    {
-        this.row = row;
-        this.col = column;
-    }
 
     public String toString() {
-    	return  "("+(row+1)+"; "+(col+1)+")";
+    	return  "("+(row+1)+", "+(col+1)+")";
     }
 }

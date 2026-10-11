@@ -3,7 +3,7 @@ package fr.esisar.in450.gomoku.player;
 
 
 import fr.esisar.in450.gomoku.gamecore.AbstractPlayer;
-import fr.esisar.in450.gomoku.gamecore.enums.CellColor;
+import fr.esisar.in450.gomoku.gamecore.enums.*;
 import fr.esisar.in450.gomoku.gamecore.model.Coords;
 
 import fr.esisar.in450.gomoku.tree.Tree;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class MinMaxAIPlayer extends AbstractPlayer {
 	
-	private static final int depth_MINMAX = 5;
-	private Tree minmax_tree;
-	private boolean premier_coup = true;
+	private static final int depth_MINMAX = 5; // Profondeur de l'arbre Min Max
+	private Tree minmax_tree; // Arbre Min Max
+	private boolean premier_coup = true; // Variable qui représente le premier coup
 
 	
 	
@@ -55,14 +55,26 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 		elagage_minmax(depth_MINMAX, true, minmax_tree, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		
 		
-		// On choisit le meilleur coup
+		// L'IA choisit le meilleur coup
 		minmax_tree = minmax_tree.getBestNextNode(playerColor);
 		
-		return minmax_tree.getMove();
+		
+		// Gestion de la remise à la valeur initiale de la variable premier_coup (true)
+		Coords move = minmax_tree.getMove();
+		board.setCellColor(move.row, move.col, playerColor);
+		if(board.getWinnerState() != WinnerState.NONE) {
+			premier_coup = true;
+		}
+		board.removeCellColor(move.row, move.col);
+		
+		
+		return move;
 	}
 	
 	
-	
+	/*
+	 * Gestion du premier coup
+	 */
 	private Coords playPremierCoup() {
 		premier_coup = false;
 		if(board.isEmpty()) { // L'adversaire n'a pas encore joué
@@ -98,21 +110,21 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 	
 	
 	/*
-	 * Create a minmax tree regarding the possible moves on the board
+	 * Construction d'un arbre Min Max
 	 * 
 	 */
-	private Tree construct_minmax_tree(Coords move, int depth, CellColor color) {
+	private Tree construct_minmax_tree(Coords move, int depth, CellColor node_color) {
 		if(depth == 0) { // Condition d'arrêt de l'algorithme récursif
 			return new Tree(move);
 		}
 		else {
 			// Détermination de la prochaine couleur
-			CellColor nextColor = (color == CellColor.BLACK) ? CellColor.WHITE : CellColor.BLACK;
+			CellColor nextColor = (node_color == CellColor.BLACK) ? CellColor.WHITE : CellColor.BLACK;
 			
 			// Parcours des cellules vides autour des cellules présentes sur le plateau
 			Tree tree = new Tree(move);
 			for(Coords coordonnes : new ArrayList<>(board.empty_cells)) {
-				board.setCellColor(coordonnes.row, coordonnes.col, color);
+				board.setCellColor(coordonnes.row, coordonnes.col, node_color);
 				tree.getChildrens().add(construct_minmax_tree(coordonnes, depth-1, nextColor));
 				board.removeCellColor(coordonnes.row, coordonnes.col);
 			}
@@ -123,7 +135,9 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 	}
 	
 	
-	
+	/*
+	 * Extention d'un arbre Min Max
+	 */
 	private void extend_minmax_tree(Tree tree, int depth, CellColor node_color){
 	    // Si on atteint la profondeur maximale, on arrête
 	    if (depth == 0) {
@@ -183,6 +197,7 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 	
 	
 	/*
+	 * Implémentation de l'algorithme Min Max
 	 * max = true si c'est au joueur de placer une pièce (false sinon)
 	 * */
 	private int minmax(int depth, boolean max, Tree arbre) {
@@ -219,7 +234,9 @@ public class MinMaxAIPlayer extends AbstractPlayer {
 	}
 	
 	
-	
+	/*
+	 * Implémentation de l'algoritme Min Max avec élagage alpha beta
+	 */
 	private int elagage_minmax(int depth, boolean max, Tree arbre, int alpha, int beta) {
 	    if (depth == 0 || arbre.isLeaf()) {
 	        int eval = board.eval_plateau();

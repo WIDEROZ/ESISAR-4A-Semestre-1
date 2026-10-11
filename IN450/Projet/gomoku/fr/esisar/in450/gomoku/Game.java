@@ -24,6 +24,8 @@ public class Game
 		// ex2();
 		// ex3();
 		min_max_player();
+		//etape0();
+		//etape1();
 	}
 	
 	/**
@@ -53,12 +55,13 @@ public class Game
 	}
 	
 	/**
-	 * Exemple 1 : permet de faire une partie en local entre une IA min max et un joueur humain 
+	 * Permet de faire une partie en local entre une IA min max et un joueur humain 
 	 */
 	public static void min_max_player()
 	{
 		new LocalGameManager().startMatch(new BasicAIPlayer(), new MinMaxAIPlayer());
 	}
+	
 	
 	
 	
@@ -99,7 +102,7 @@ public class Game
 	
 	public static void etape1() throws IOException
 	{
-		new ClientNetWorkGameManager().startMatches(new BasicAIPlayer(),4,"192.168.130.9","equipe 1");
+		new ClientNetWorkGameManager().startMatches(new MinMaxAIPlayer(),4,"192.168.1.51","equipe 1");
 	}
 	
 	public static void etape2() throws IOException

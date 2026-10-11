@@ -28,7 +28,7 @@ public class GomokuBoard
     public ArrayList<Coords> empty_cells = new ArrayList<Coords>();
     
     
-    // Previous move
+    // Coup précédent
     public Coords prev_move;
     
     
@@ -76,7 +76,7 @@ public class GomokuBoard
     
     
     /*
-     * 
+     * Supprimmer une pièce du plateau
      */
     public void removeCellColor(int row, int col)
 	{
@@ -426,7 +426,7 @@ public class GomokuBoard
 	
 	
 	/**
-	 * Fonction d'évaluation du plateau
+	 * Fonction d'évaluation du plateau courrant
 	 */
 	public int eval_plateau() {
 	    WinnerState winner = getWinnerState();
@@ -443,6 +443,9 @@ public class GomokuBoard
 	}
 	
 	
+	/**
+	 * Fonction d'évaluation : Calcule un entier à partir du tableau renvoyé par detect_schema
+	 */
 	private int eval_function(int[][][] ret) {
 		int count = 0;
 		
@@ -489,10 +492,10 @@ public class GomokuBoard
 	 * tab[1][][] : semi-ouvert
 	 * tab[][0][] : Noirs
 	 * tab[][1][] : Blancs
-	 * tab[][][0] : Nombre de groupes de pions alignés par deux
-	 * tab[][][1] : Nombre de groupes de pions alignés par trois
-	 * tab[][][2] : Nombre de groupes de pions alignés par quatre
-	 * tab[][][3] : Nombre de groupes de pions alignés par cinq
+	 * tab[][][0] : Nombre de groupes de pions alignés par 2
+	 * tab[][][1] : Nombre de groupes de pions alignés par 3
+	 * tab[][][2] : Nombre de groupes de pions alignés par 4
+	 * tab[][][3] : Nombre de groupes de pions alignés par 5
 	 * 
 	 */
 	private int[][][] detect_schema(){
@@ -573,7 +576,9 @@ public class GomokuBoard
 	}
 	
 	
-	
+	/**
+	 * Compte le nombre de pièces allignés (> 2 pièces) à partir d'un motif : (ex. "WB BBBW")
+	 */
 	private void parcours_motif(int[][][] ret, String motif){
 		char elt, prev_elt;
 		int i, count_motif;
