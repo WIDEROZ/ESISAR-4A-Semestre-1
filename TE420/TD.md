@@ -14,4 +14,3 @@ Trouver une idée de produit/service innovant.
 
 
 # Cloud computing
-

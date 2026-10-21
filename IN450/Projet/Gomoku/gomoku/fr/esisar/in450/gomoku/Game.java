@@ -23,9 +23,10 @@ public class Game
 		// ex1();
 		// ex2();
 		// ex3();
-		min_max_player();
+		//min_max_player();
 		//etape0();
 		//etape1();
+		etape2();
 	}
 	
 	/**
@@ -107,7 +108,7 @@ public class Game
 	
 	public static void etape2() throws IOException
 	{
-		new ClientNetWorkGameManager().startMatches(new DummyPlayer(),4,"192.168.130.9","equipe 2");
+		new ClientNetWorkGameManager().startMatches(new MinMaxAIPlayer(),4,"172.17.0.1","equipe 2");
 	}
 
 

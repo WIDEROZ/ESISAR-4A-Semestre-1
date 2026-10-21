@@ -7,3 +7,6 @@
 [submodule "Contrats"]
 	path = Contrats
 	url = git@github.com:WIDEROZ/Contrats.git
+[submodule "MIC"]
+	path = MIC
+	url = git@github.com:WIDEROZ/MIC.git

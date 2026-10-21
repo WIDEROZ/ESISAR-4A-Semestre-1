@@ -76,7 +76,7 @@ Fait un :
 
 
 
-#### Methode la plus rapide pour faire clignoter la LED
+#### 3 - Methode la plus rapide pour faire clignoter la LED
 La méthode la plus rapide est celle avec le changement de registre PORTB. 
 PINB fait :
 ```assembly
@@ -90,3 +90,27 @@ sbi 0x03, 5
 cbi 0x03, 5
 ```
 C'est le même registre modifié.
+
+#### 4 - Clignotement de la LED en utilisant digitalWrite
+![[SDS822X_HD_PNG_1.png]]
+
+TODO : Calucler le nombre de cycles d'horloges
+
+#### 5 - Clignottement de la LED à $1 \, \text{kHz}$
+Sans la fonction delay on est a $150$ kHz
+Avec la fonction delay on est a $77kHz$
+Alors, 
+$$148\, kHz \to 1\, kHz$$
+$$ 6.75\mu s \to 1 \, ms$$
+$$1000 - 6.75 = 993\mu s$$
+Il faut donc mettre un delay de $496.5$ entre chaque digitalWrite. 
+![[SDS822X_HD_PNG_3.png]]
+
+Sortie sur port série : 
+![[SDS822X_HD_PNG_4.png]]
+
+![[SDS822X_HD_PNG_6.png]]![[SDS822X_HD_PNG_7.png]]
+
+#### 7 - Sans attente logicielle
+![[SDS822X_HD_PNG_5.png]]
+![[SDS822X_HD_PNG_8.png]]![[SDS822X_HD_PNG_9.png]]

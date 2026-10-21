@@ -79,5 +79,46 @@ C'est la vitesse à laquelle monte le signal (en prenant en distance les volts)
 #### I/O Modes
 ![[Pasted image 20260914112139.png]]
 
-# Timers
+# IV - Interruptions
+
+
+# V - Timers
 ![[Pasted image 20260921111347.png]]
+
+# VI - CAN
+## 1 - Définition
+Pas de quantification : 
+$$q = \frac{V_{\max}-V_{\min}}{2^{n}-1}$$
+## 2 - Bruits
+Bruits à connaitre : 
+- Bruits de quantification
+- Bruit thermique
+- Couplage et CEM
+
+#### Bruit thermique
+Relation de Nyquist : 
+$$V_{b}^{2} = 4k_{b}TR \Delta f$$
+- $V_{b}$ : Variance de la tension aux bornes de la résistance 
+- $k_{b}$ : Constante de Boltzman
+- $T$ : Température de l'expérience
+- $R$ : Résistance
+- $\Delta f$ : Bande passante considérée
+
+## 3 - Propagation des incertitudes
+Cas moyen : 
+$$\Delta y^{2} = \sum_{i = 1}^{n} \left( \frac{\partial f}{\partial x_{i}} \Delta x_{i} \right)^{2}$$
+Pire cas : 
+$$\Delta y = \sum_{i = 1}^{n} \left| \frac{\partial f}{\partial x_{i}} \right| \Delta x_{i} $$
+
+
+# VII - CNA
+## 1 - Définition
+Résultat de la convesion : 
+$$V_{out} = \frac{N}{2^{n}-1}(V_{\max} - V_{\min}) + V_{\min}$$
+Pas de quantification : 
+$$q = \frac{V_{\max}-V_{\min}}{2^{n}-1}$$
+
+# VIII - DMA
+
+
+# IV - Horloge

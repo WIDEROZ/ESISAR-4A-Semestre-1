@@ -84,5 +84,40 @@ $$4N = 55,6 \, kB$$
 
 #### 4.
 On peux changer la taille des mots pour le première.
-Pour la deuxième le printf va lire le dico sans s'arrêter (car pas de caractère \0)
+Pour la deuxième le printf va lire le dico sans s'arrêter (car pas de caractère `\0`)
 
+
+# Exercice 4
+#### 1.
+$$\begin{cases}
+\max &:& 2^{E-1} + 2^{-F} \\
+\min &:& -2^{E-1}&
+\end{cases}$$
+
+#### 2.
+$$\begin{array}{c}
+\text{E}&\text{F}&Q_{2.6}&\text{Décimal} \\
+10&000111 & -2 + 2^{-4} + 2^{-5} + 2^{-6}&-1.890625 \\
+00&110100 & 2^{-1} + 2^{-2} + 2^{-4}&0.8125 \\
+01&011000 & 2^{0} + 2^{-2} + 2^{-3}&1.375 \\
+11&000100 & -2^{1} + 2^{0} + 2^{-4}&-0.9375
+\end{array}$$
+
+On divise sinon le chiffre hexa par $2^{F}$. 
+
+#### 3.
+$$\begin{array}{c}
+\text{Decimal}&\text{E}&\text{F}&\text{Hexa}\\
+\pi&011&00100 &0x64 \\
+-\pi&100&11100 &0x9c & \text{complément à 2} \\
+\sqrt{2}=1.41421&001&01101&0x2D \\
+1.5&001&10000&0x30 \\
+-1.2345&110&11001&0xD9 & \text{complément à 2}
+\end{array}$$
+
+#### 4.
+$$\frac{15}{128}_{Q_{1.7}}$$
+$$\frac{100}{128} \times \frac{64}{128} = \frac{50}{128}_{Q1.7}$$
+$$\frac{84 \times 65}{128^{2}} = \frac{5460}{128^{2}} \text{ or } 5460 = 1010101010100$$
+Alors $5460\gg 7 = 42$ ainsi $\frac{5460}{128^{2}} = \frac{42}{128}$
+$$\frac{8}{128} \div \frac{96}{128} = \frac{10}{128}$$

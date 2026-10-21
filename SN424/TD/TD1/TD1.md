@@ -136,5 +136,82 @@ Ainsi,
 $$\boxed{V_{s}(t) = H_{0}e^{ -\omega_{0}t } = \frac{1}{C} e^{ -\frac{1}{RC}t }}$$
 
 #### Question 6
-Th de superposition. 
-$$\boxed{V_{s}(t) = H_{0}(e^{ -\omega_{0}(t-1) } - 0.5 e^{ -\omega_{0}(t-2) } + 0.1 e^{ -\omega_{0}(t-3) })}$$
+Théorème de superposition. 
+$$\boxed{V_{s}(t) = H_{0}(e^{ -\omega_{0}(t-1) }u(t-1) - 0.5 e^{ -\omega_{0}(t-2) }u(t-2) + 0.1 e^{ -\omega_{0}(t-3) }u(t-3))}$$
+
+#### Question 7
+
+
+# III - Transformée en $Z$ et filtres numériques
+## Exercice 5 - Filtre à moyenne Glissante
+#### Question 1
+$$y(n) = \frac{1}{N}\sum_{k = 0}^{N-1} x(n-k)$$
+
+
+#### Question 2
+$$TZ(y(n)) = \frac{X(z)}{N} \sum_{k =0}^{N-1}z^{-k} = \frac{X(z)}{N} \frac{1-z^{-N}}{1-z^{-1}}$$
+Ainsi, 
+$$\boxed{H(z) = \frac{1}{N}\sum_{k = 0}^{N-1} z^{-k} = \frac{1}{N} \frac{1-z^{-N}}{1-z^{-1}}}$$
+
+#### Question 3
+$$z=  e^{ 2j \pi ft }$$
+Alors, 
+$$H(f) = \frac{1}{N} \frac{1-e^{ -2 \pi j NfT }}{1-e^{ -2 \pi j fT }} = \frac{1}{N} e^{ -2 \pi j \frac{N-1}{2} fT } \frac{\sin(\pi NfT)}{\sin(\pi fT)}$$
+Ainisi, 
+$$\boxed{H(f) = \frac{1}{N} \frac{\sin(\pi NfT)}{\sin(\pi fT)} e^{ -2 \pi j \frac{N-1}{2} fT }}$$
+![[Pasted image 20261015110250.png]]
+Passe bas
+
+#### Question 4
+```C
+float y(float[] x_tab, int n, int N){
+	float y = 0;
+	int k;
+	for(k = 0; k < N; k++){
+		y += x[n-k];
+	}
+	y = y*(1/N);
+	return y;
+}
+```
+
+
+```C
+int main(){
+	int NN = ...; // Nombres d'échantillons
+	int N = ...; // Nombres d'échantillons sur lequels faire la moyenne
+	
+	float x[NN], y[NN];
+	
+	int n;
+	for(n = N-1; n < NN; n++){
+		y[n] = y(x, n, N);
+	}
+	
+	return 0;
+}
+```
+
+#### Question 5
+Chemin critique plus long :
+![[Pasted image 20261015113849.png]]
+Chemin critique moins long :
+![[Pasted image 20261015114100.png]]
+
+#### Question 6
+$$y(n) = \frac{1}{N}\sum_{k = 0}^{N-1}x(n-k)$$
+$$y(n-1) = \frac{1}{N}\sum_{k = 1}^{N}x(n-k) $$
+Ainsi, 
+$$\boxed{y(n) = y(n-1) + \frac{1}{N}(x(n) - x(n-N))}$$
+
+#### Question 7
+Ce filtre devient alors un RII (réponse impultionelle infinie)
+
+## Exercice 6 - Filtres RII du premeir ordre
+#### Question 1
+$$(1-\alpha z^{-1})Y(z)= (1-\alpha)Y(z)$$
+Ainsi, 
+$$\boxed{H(z) = \frac{1-\alpha}{1-\alpha z^{-1}}}$$
+
+#### Question 2
+$$H(f) = \frac{1-\alpha}{1-\alpha e^{ -2 \pi jfT }}$$
