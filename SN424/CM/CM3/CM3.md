@@ -32,6 +32,7 @@ $$x(t) = \tilde{x}_{1}(t)\cos(2 \pi  f_{0}t) - \tilde{x}_{Q}(t)\sin(2 \pi f_{0}t
 - $\tilde{x}_{1} = a(t) \cos(\varphi(t))$ : Composante en phase
 - $\tilde{x}_{Q} = a(t)\sin(\varphi(t))$ : Composante en quadrature
 
+
 #### Symétrie Hermitienne
 $$\boxed{X(f) = X^{*}(-f)}$$
 #### Valeur principale de cauchy
