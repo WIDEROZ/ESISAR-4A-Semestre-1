@@ -187,7 +187,7 @@ SELECT ename, hiredate FROM Emp
 WHERE deptno=20;
 ```
 
-```
+```sql
  ename |  hiredate  
 -------+------------
  SMITH | 1980-12-17
@@ -203,7 +203,7 @@ SELECT ename, job, sal FROM Emp
 WHERE sal>2800 and job='MANAGER';
 ```
 
-```
+```sql
  ename |   job   |   sal   
 -------+---------+---------
  JONES | MANAGER | 2975.00
@@ -217,7 +217,7 @@ WHERE deptno=30
 ORDER BY sal ASC, ename DESC;
 ```
 
-```
+```sql
  ename  |   job    |   sal   
 --------+----------+---------
  JAMES  | CLERK    |  950.00
@@ -234,9 +234,10 @@ SELECT ename, job, sal FROM Emp
 WHERE sal>=1290 and ename LIKE 'M%';
 ```
 
-```
-SELECT ename, job, sal FROM Emp
-WHERE sal>=1290 and ename LIKE 'M%';
+```sql
+ ename  |  job  |   sal   
+--------+-------+---------
+ MILLER | CLERK | 1300.00
 ```
 
 #### Question 5
@@ -246,7 +247,7 @@ WHERE ename BETWEEN 'D' AND 'M'
 ORDER BY ename;
 ```
 
-```
+```sql
  ename 
 -------
  FORD
@@ -261,7 +262,7 @@ SELECT ename, job, sal, d.deptno, dname, loc FROM Emp e, Dept d
 WHERE e.deptno = d.deptno AND d.loc='DALLAS';
 ```
 
-```
+```sql
 SELECT ename, job, sal, d.deptno, dname, loc FROM Emp e, Dept d
 WHERE e.deptno = d.deptno AND d.loc='DALLAS';
  ename |   job   |   sal   | deptno |  dname   |  loc   
@@ -279,7 +280,7 @@ SELECT d.deptno, dname, loc FROM Emp e, Dept d
 WHERE e.deptno = d.deptno AND e.job IN ('CLERK', 'SALESMAN','ANALYST');
 ```
 
-```
+```sql
  deptno |   dname    |   loc    
 --------+------------+----------
      10 | ACCOUNTING | NEW YORK
@@ -300,7 +301,7 @@ SELECT ename, sal, d.deptno, loc FROM Emp e, Dept d
 WHERE e.deptno = d.deptno AND loc IN ('DALLAS', 'CHICAGO') AND sal>=1000;
 ```
 
-```
+```sql
  ename  |   sal   | deptno |   loc   
 --------+---------+--------+---------
  ALLEN  | 1600.00 |     30 | CHICAGO
@@ -321,7 +322,7 @@ WHERE hiredate<'1981-11-30'
 ORDER BY ename;
 ```
 
-```
+```sql
  empno | ename  |  hiredate  
 -------+--------+------------
   7499 | ALLEN  | 1981-02-20
@@ -345,7 +346,7 @@ WHERE employee.mgr=manager.empno)
 ;
 ```
 
-```
+```sql
  ename |   sal   
 -------+---------
  SCOTT | 3000.00
@@ -361,7 +362,7 @@ WHERE employee.mgr=manager.empno)
 ;
 ```
 
-```
+```sql
  ename 
 -------
  SMITH
@@ -381,7 +382,7 @@ WHERE NOT EXISTS (
 );
 ```
 
-```
+```sql
    dname    
 ------------
  ACCOUNTING
@@ -408,7 +409,7 @@ WHERE empno IN (
 ;
 ```
 
-```
+```sql
  ename 
 -------
 ```
@@ -422,7 +423,7 @@ WHERE sal>(
 );
 ```
 
-```
+```sql
  ename |   sal   
 -------+---------
  SCOTT | 3000.00
@@ -441,7 +442,7 @@ WHERE sal>(
 	;
 ```
 
-```
+```sql
    dname    
 ------------
  OPERATIONS
@@ -458,7 +459,7 @@ WHERE EXISTS (
 );
 ```
 
-```
+```sql
  ename  
 --------
  ALLEN
@@ -483,7 +484,7 @@ WHERE empno IN (
 );
 ```
 
-```
+```sql
  ename 
 -------
  JONES
@@ -503,7 +504,7 @@ WHERE empno IN (
 );
 ```
 
-```
+```sql
  empno | ename |   job   |   sal   | comm 
 -------+-------+---------+---------+------
   7698 | BLAKE | MANAGER | 2850.00 |     
@@ -550,3 +551,310 @@ ORDER BY e.sal, e.ename
 
 
 ## Agrégats et regroupement
+#### Question 20
+```sql
+SELECT d.deptno, d.dname, d.loc
+FROM Dept AS d
+NATURAL RIGHT OUTER JOIN Emp AS e
+GROUP BY d.deptno, d.dname, d.loc
+HAVING COUNT(e.empno) > 3 AND d.loc != 'CHICAGO'
+;
+```
+
+```sql
+ deptno |  dname   |  loc   
+--------+----------+--------
+     20 | RESEARCH | DALLAS
+```
+
+#### Question 21
+```sql
+SELECT d.dname, COUNT(e.empno) AS nbre_max_employes
+FROM Dept AS d
+NATURAL RIGHT OUTER JOIN Emp AS e
+GROUP BY d.dname
+HAVING COUNT(e.empno)=(
+	SELECT MAX(nbre_emp_per_dept)
+    FROM (
+        SELECT COUNT(*) AS nbre_emp_per_dept
+        FROM Emp
+        GROUP BY deptno
+	    )
+	)
+;
+```
+
+```sql
+ dname | nbre_max_employes 
+-------+-------------------
+ SALES |                 6
+```
+
+#### Question 22
+Facile : 
+```sql
+SELECT manager.ename,
+COUNT(manager.ename) AS Nb_subordonnes
+FROM Emp AS manager
+LEFT OUTER JOIN Emp AS subordonnes
+ON manager.empno = subordonnes.mgr
+WHERE subordonnes.mgr IS NOT NULL
+GROUP BY manager.ename
+ORDER BY Nb_subordonnes
+;
+```
+
+```sql
+ ename | nb_subordonnes 
+-------+----------------
+ FORD  |              1
+ CLARK |              1
+ SCOTT |              1
+ JONES |              2
+ KING  |              3
+ BLAKE |              5
+```
+
+Difficile : 
+```sql
+SELECT manager.ename,
+COUNT(subordonnes.mgr) AS Nb_subordonnes
+FROM Emp AS manager
+LEFT OUTER JOIN Emp AS subordonnes
+ON manager.empno = subordonnes.mgr
+GROUP BY manager.ename
+ORDER BY Nb_subordonnes
+;
+```
+
+```sql
+ ename  | nb_subordonnes 
+--------+----------------
+ ALLEN  |              0
+ MARTIN |              0
+ JAMES  |              0
+ ADAMS  |              0
+ TURNER |              0
+ MILLER |              0
+ SMITH  |              0
+ WARD   |              0
+ CLARK  |              1
+ FORD   |              1
+ SCOTT  |              1
+ JONES  |              2
+ KING   |              3
+ BLAKE  |              5
+```
+
+#### Question 23
+```sql
+SELECT
+d.dname,
+e.job,
+SUM(e.sal) AS Total_salaire,
+COUNT(e.empno) AS Nb_employes,
+AVG(e.sal) AS Salaire_moyen
+
+FROM Dept as d
+
+LEFT OUTER JOIN Emp as e 
+ON d.deptno = e.deptno
+
+GROUP BY d.dname, e.job
+HAVING COUNT(e.job)>=2
+;
+```
+
+```sql
+  dname   |   job    | total_salaire | nb_employes |     salaire_moyen     
+----------+----------+---------------+-------------+-----------------------
+ SALES    | SALESMAN |       5600.00 |           4 | 1400.0000000000000000
+ RESEARCH | ANALYST  |       6000.00 |           2 | 3000.0000000000000000
+ RESEARCH | CLERK    |       1900.00 |           2 |  950.0000000000000000
+```
+
+#### Question 24
+```sql
+SELECT
+d.dname,
+e.job,
+SUM(e.sal) AS Total_salaire,
+COUNT(e.empno) AS Nb_employes,
+AVG(e.sal) AS Salaire_moyen
+
+FROM Dept as d
+
+LEFT OUTER JOIN Emp as e 
+ON d.deptno = e.deptno
+
+GROUP BY d.dname, e.job
+
+ORDER BY Nb_employes DESC, d.dname, e.job
+;
+
+```
+
+```sql
+   dname    |    job    | total_salaire | nb_employes |     salaire_moyen     
+------------+-----------+---------------+-------------+-----------------------
+ SALES      | SALESMAN  |       5600.00 |           4 | 1400.0000000000000000
+ RESEARCH   | ANALYST   |       6000.00 |           2 | 3000.0000000000000000
+ RESEARCH   | CLERK     |       1900.00 |           2 |  950.0000000000000000
+ ACCOUNTING | CLERK     |       1300.00 |           1 | 1300.0000000000000000
+ ACCOUNTING | MANAGER   |       2450.00 |           1 | 2450.0000000000000000
+ ACCOUNTING | PRESIDENT |       5000.00 |           1 | 5000.0000000000000000
+ RESEARCH   | MANAGER   |       2975.00 |           1 | 2975.0000000000000000
+ SALES      | CLERK     |        950.00 |           1 |  950.0000000000000000
+ SALES      | MANAGER   |       2850.00 |           1 | 2850.0000000000000000
+ OPERATIONS |           |               |           0 |                      
+```
+
+#### Question 25
+```sql
+SELECT EXTRACT(YEAR FROM e.hiredate) AS Annee, COUNT(e.empno) AS Nb_Employes
+FROM Emp AS e
+GROUP BY Annee
+ORDER BY Annee
+;
+```
+
+```sql
+ annee | nb_employes 
+-------+-------------
+  1980 |           1
+  1981 |          10
+  1982 |           2
+  1983 |           1
+```
+
+#### Question 26
+Facile : 
+```sql
+SELECT
+d.dname,
+AVG(e.sal) AS Salaire_moyen
+FROM Dept AS d
+LEFT OUTER JOIN Emp e
+ON d.deptno = e.deptno
+WHERE e.sal IS NOT NULL
+GROUP BY d.dname
+;
+```
+
+```sql
+   dname    |     salaire_moyen     
+------------+-----------------------
+ ACCOUNTING | 2916.6666666666666667
+ SALES      | 1566.6666666666666667
+ RESEARCH   | 2175.0000000000000000
+
+```
+
+Difficile :
+```sql
+SELECT
+d.dname,
+CONCAT(ROUND(AVG(e.sal), 2), ' dollars') AS Salaire_moyen
+FROM Dept AS d
+LEFT OUTER JOIN Emp e
+ON d.deptno = e.deptno
+WHERE e.sal IS NOT NULL
+GROUP BY d.dname
+;
+```
+
+```sql
+   dname    |  salaire_moyen  
+------------+-----------------
+ ACCOUNTING | 2916.67 dollars
+ SALES      | 1566.67 dollars
+ RESEARCH   | 2175.00 dollars
+```
+
+
+#### Question 27
+Facile : 
+```sql
+SELECT
+d.dname,
+SUM(e.sal) AS SALAIRE,
+SUM(e.comm) AS COMMISSION
+FROM Dept AS d
+LEFT OUTER JOIN Emp e
+ON d.deptno = e.deptno
+GROUP BY d.dname
+;
+```
+
+```sql
+   dname    | salaire  | commission 
+------------+----------+------------
+ ACCOUNTING |  8750.00 |           
+ SALES      |  9400.00 |    2200.00
+ OPERATIONS |          |           
+ RESEARCH   | 10875.00 |           
+```
+
+Difficile :
+```sql
+SELECT
+d.dname,
+CONCAT(COALESCE(SUM(e.sal), '0.00'), ' dollars') AS SALAIRE,
+CONCAT(COALESCE(SUM(e.comm), '0.00'), ' dollars') AS COMMISSION
+FROM Dept AS d
+LEFT OUTER JOIN Emp e
+ON d.deptno = e.deptno
+GROUP BY d.dname
+;
+```
+
+```sql
+   dname    |     salaire      |   commission    
+------------+------------------+-----------------
+ ACCOUNTING | 8750.00 dollars  | 0.00 dollars
+ SALES      | 9400.00 dollars  | 2200.00 dollars
+ OPERATIONS | 0.00 dollars     | 0.00 dollars
+ RESEARCH   | 10875.00 dollars | 0.00 dollars
+
+```
+
+#### Question 28
+```sql
+SELECT
+    TABLE_MIN.dname AS Moins_cher,
+    TABLE_MIN.salaire_min AS mini,
+    TABLE_MAX.dname AS Plus_cher,
+    TABLE_MAX.salaire_max AS maxi
+FROM (
+	 SELECT d.dname, SUM(e.sal) AS salaire_min
+     FROM Dept d
+     JOIN Emp e ON d.deptno = e.deptno
+     GROUP BY d.deptno, d.dname
+     HAVING SUM(e.sal) = (
+         SELECT MIN(total_sal)
+         FROM (
+             SELECT SUM(sal) AS total_sal
+             FROM Emp
+             GROUP BY deptno
+         )
+     )) TABLE_MIN,
+    (
+     SELECT d.dname, SUM(e.sal) AS salaire_max
+     FROM Dept d
+     JOIN Emp e ON d.deptno = e.deptno
+     GROUP BY d.deptno, d.dname
+     HAVING SUM(e.sal) = (
+         SELECT MAX(total_sal)
+         FROM (
+             SELECT SUM(sal) AS total_sal
+             FROM Emp
+             GROUP BY deptno
+         )
+     )) TABLE_MAX;
+```
+
+```sql
+ moins_cher |  mini   | plus_cher |   maxi   
+------------+---------+-----------+----------
+ ACCOUNTING | 8750.00 | RESEARCH  | 10875.00
+```
