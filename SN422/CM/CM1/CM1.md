@@ -1,3 +1,7 @@
+#### RTL
+RTL : Register level transfer (description du comportement du materiel)
+![[Pasted image 20261028112811.png]]
+
 
 #### Définitions 
 - ASIC : Application Specific Integrated Circuit
