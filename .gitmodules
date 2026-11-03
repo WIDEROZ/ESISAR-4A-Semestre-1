@@ -10,3 +10,6 @@
 [submodule "MIC"]
 	path = MIC
 	url = git@github.com:WIDEROZ/MIC.git
+[submodule "IN450/Projet/ACS/Automatic-Candy-Selector"]
+	path = IN450/Projet/ACS/Automatic-Candy-Selector
+	url = git@github.com:WIDEROZ/Automatic-Candy-Selector.git
