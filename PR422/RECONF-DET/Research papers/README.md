@@ -9,3 +9,7 @@ https://www.sciencedirect.com/science/article/abs/pii/S0947358021000704
 Fault Attack Detection Strategies
 
 # Delfines: Detecting Laser Fault Injection Attacks Via Digital Sensors
+
+
+
+
