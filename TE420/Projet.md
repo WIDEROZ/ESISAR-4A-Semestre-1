@@ -14,3 +14,28 @@ Trouver une idée de produit/service innovant.
 
 
 # Cloud computing
+## L'offre
+Services : Puissance
+#### Concurence
+- Shadow
+- GeForce Now
+- airgpu
+- Boosteroid
+- CloudDeck
+- Amazon Luna
+- Xbox Cloud
+- Playstation Cloud
+- Blacknut
+
+##### Offrres de Shadow
+![[Pasted image 20261104145512.png]]
+
+##### GeForce Now
+https://coopboardgames.com/statistics/geforce-now-subscribers/
+Chiffre d'affaires : 25 milions en 2023
+![[Pasted image 20261104145745.png]]
+
+##### AirGPU
+![[Pasted image 20261104150124.png]]
+
+

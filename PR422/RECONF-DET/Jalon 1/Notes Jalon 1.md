@@ -8,4 +8,4 @@
 
 #### Séance 2
 Faire un plan avec des figures/petites desciptions pour chaque partie du plan. 
-
+w

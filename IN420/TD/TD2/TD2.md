@@ -33,3 +33,18 @@ Le directeur de thèse est un membre du laboratoire qui s'occupe de l'organisati
 ![[Pasted image 20261007170244.png]]
 
 #### Question 4
+1 et 2 : 
+![[Pasted image 20261104171123.png]]
+3 : 
+![[Pasted image 20261104171159.png]]
+4 : 
+![[Pasted image 20261104171212.png]]
+
+#### Question 5
+NON ajouter des contraintes
+
+Conclusion : 
+- Constructeurs adaptés
+- Méthodes adéquates
+- Tests
+

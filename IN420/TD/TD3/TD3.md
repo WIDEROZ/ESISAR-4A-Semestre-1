@@ -17,15 +17,34 @@ $$\begin{array}{l}
 \end{array}$$
 
 #### 2 - Entités faibles
-$$
-\begin{array}{l}
-\text{Album}(\underline{\text{id}}, \text{titre}) \\
-\text{Photo}(\underline{\text{id}, \text{numéro d'ordre}}, \text{Titre}, \text{Commentaire}) \\
-\text{Photo}[\text{id}] \subseteq \text{Album}[id]
-\end{array}
-$$
-![[Pasted image 20261014171533.png]]
+$\text{Album}(\underline{\text{idAlbum}}, \text{titre})$
+Photo(<span class="souligne-double">idAlbum</span><u>, numéro d'ordre</u>, titre, commentaire)
+$\text{Photo}[\text{idAlbum}] \subseteq \text{Album}[idAlbum]$
+
 ##### 3 - Cardinalités 1..1
-$$\begin{array}{l}
-\text{Fichier}
-\end{array}$$
+Fichier(<u>chemin</u>, conditions, <span class="souligne-dash">mail</span>)
+Fichier$[\text{mail}]$ $\subseteq$ Client$[\text{mail}]$
+
+Photo(<span class="souligne-double">idAlbum</span><u>, numéro d'ordre</u>, titre, commentaire, <span class="souligne-dash">chemin</span>)
+Photo$[\text{chemin}]$ $\subseteq$ Fichier$[\text{chemin}]$
+
+Livre(<span class="souligne-double">idAlbum</span>, préface, postface, <span class="souligne-dash">numero</span>)
+Livre$[\text{numero}]$ $\subseteq$ Photo$[\text{numero}]$
+
+##### 4 - Cardinalités 0..1
+$\text{Album}(\underline{\text{idAlbum}}, \text{titre})$
+$\text{SousTitre}(\underline{sousTitre})$
+
+Table internal : 
+R(<span class="souligne-double">id</span>, <span class="souligne-dash">sousTitre</span>)
+
+Livre(<span class="souligne-double">idAlbum</span>, préface, postface)
+Photo(<u>numéro d'ordre</u>, titre, commentaire)
+
+Table internal : 
+R(<span class="souligne-double">numéro d'ordre</span>, <span class="souligne-dash">idAlbum</span>)
+
+##### 5 - Table internals
+
+
+<span class="souligne-"></span>

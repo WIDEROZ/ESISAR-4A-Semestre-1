@@ -35,6 +35,7 @@ Microcontrôleur Reference Manual
 15.4.1 - TIMx control register 1 (TIMx_CR1)
 
 $16$ bits control register :
+000
 
 | 9        | 8        | 7    | 6        | 5        | 4   | 3   | 2   | 1    | 0   |
 | -------- | -------- | ---- | -------- | -------- | --- | --- | --- | ---- | --- |
@@ -80,10 +81,10 @@ On ne divise pas la clock.
 User Manual STM32 Nucleo-64 boards
 Chapter 7.6 - p.24
 
-| Pin name (signal) | Pin  | STM32 Pin |
-| ----------------- | ---- | --------- |
-| D13               | 21   | PA5       |
-| D13               | 34   | PB13      |
+| Pin name (signal) | Pin | STM32 Pin |
+| ----------------- | --- | --------- |
+| D13               | 21  | PA5       |
+| D13               | 34  | PB13      |
 
 #### 8 - GPIO_InitTypeDef
 User Manual - HAL library STM32F1
@@ -96,4 +97,7 @@ page 225 : 20.1.1 - GPIO_InitTypeDef
 | uint32_t | Mode  | GPIO_MODE_OUTPUT_PP |
 | uint32_t | Pull  | GPIO_PULLUP         |
 | uint32_t | Speed | GPIO_SPEED_LOW      |
+
+36.1.11
+
 
