@@ -3,7 +3,7 @@ Trouver une idée de produit/service innovant.
 
 # Idées
 - Lunnettes traduit où tu regardes
-- Casque traducteur en direct (+ reuduc de bruit)
+- Casque traducteur en direct (+ reduc de bruit)
 - Adaptateur de machine à café
 - Etiquettes pour mesurer la péremption des aliments
 - Scooter volant grâce à l'électromagnétisme
@@ -16,6 +16,7 @@ Trouver une idée de produit/service innovant.
 # Cloud computing
 ## L'offre
 Services : Puissance
+
 #### Concurence
 - Shadow
 - GeForce Now
@@ -37,5 +38,5 @@ Chiffre d'affaires : 25 milions en 2023
 
 ##### AirGPU
 ![[Pasted image 20261104150124.png]]
-
-
+ 
+  
